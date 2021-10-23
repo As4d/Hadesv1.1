@@ -1,0 +1,8 @@
+http://51.38.80.233/asad	     	  	#internet/home directory
+http://51.38.80.233/pmahidden/    		#phpmyadmin (database management)
+asad	                             	#db/FTP/SSH username
+TdmY3Dn7                         	 	#db/FTP/SSH password
+asaddb                              	#db name
+ssh asad@51.38.80.233
+51.38.80.233
+TdmY3Dn7

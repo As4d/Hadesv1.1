@@ -1,0 +1,15 @@
+Antivirus should always have a last update.
+Spam messages should not be opened or replied.
+Personalize the anti-spam settings the right way.
+Apply patches and keep the operating system, antivirus,browsers, Adobe Flash Player, Java, and other software up-to-date.
+Keep the Windows Firewall turned on and properly configured at all times.
+Enhance the security of your Microsoft Office components (Word, Excel, PowerPoint, Access, etc.).
+Think of disabling remote services.
+Filter EXEs in email.
+Use a reputable security suite.
+Use System Restore to get back to a known-clean state.
+Sure to disable file sharing.
+Switch off unused wireless connections, such as Bluetooth or infrared ports.
+Exercise caution before using Wi-Fi network.
+Do not click on harmful links in your email.
+Do not visit unsafe and unreliable websites. Rather than clicking any web links, type out web address on address bar.
