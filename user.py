@@ -41,6 +41,3 @@ class UserInfo():
 
     def updateLastScan(self):
         self.data['LastScan'] = "{}{}".format(str(datetime.datetime.now())[:10], str(datetime.datetime.now())[10:19])
-
-if __name__ == "__main__":
-    user = UserInfo()
