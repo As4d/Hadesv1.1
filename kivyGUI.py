@@ -11,12 +11,12 @@ class GridLayout(GridLayout):
     def __init__(self, **kwargs):
         super(GridLayout, self).__init__(**kwargs)
 
-        self.cols = 2
+        self.cols = 4
 
-        self.add_widget(Label(text = "Whos better"))
+        self.add_widget(Label(text = "Test"))
         self.add_widget(TextInput(multiline= False))
 
-        self.add_widget(Label(text = "W/L: "))
+        self.add_widget(Label(text = "Test"))
         self.add_widget(TextInput(multiline= False))
 
 class Window(App):
