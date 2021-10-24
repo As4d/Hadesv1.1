@@ -58,6 +58,3 @@ class Infector():
             for file in q.queue:
                 if str(file.split("\\")[-1].split(".")[0]) in lines:
                     print("Vulnerable File name:", "'{}'".format(file.split("\\")[-1].split(".")[0]), "wtf man")
-
-root = Infector()
-root.searchVulnerableFileNames()
