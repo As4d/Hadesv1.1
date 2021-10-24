@@ -1,7 +1,7 @@
 from tkinter import *
 from tkinter import ttk
-from Fileinfector import Infector
-from UserInfo import UserInfo
+from infector import Infector
+from user import UserInfo
 import time
 import random
 

@@ -1,4 +1,4 @@
-from ds import Queue
+from dataStructures import Queue
 import os
 
 class Infector():
