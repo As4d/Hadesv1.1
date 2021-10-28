@@ -7,13 +7,28 @@
         size: root.width, root.height
 
         GridLayout:
+            cols: 2
+            pos_hint: {'x': 0.375,'y': 0.5}
+            size_hint: 0.25 , 0.1
+
+            Label:
+                id: num_files_label
+                font_size: 32
+                text: ""
+            
+            Label:
+                id: name_file_label
+                font_size: 8
+                text: ""
+
+        GridLayout:
             cols: 1
             pos_hint: {'x': 0.375,'y': 0.025}
             size_hint: 0.25 , 0.1
 
             Button:
+                id: run_button
                 text: "Run"
                 font_size: 32
                 background_color: (100, 0, 0, 0.5)
                 on_press: root.RunPress()
-                on_release: root.RunRelease()

@@ -8,6 +8,7 @@ class Infector():
         self.qzip = Queue()
         self.qexe = Queue()
         self.findAllFiles()
+        self.files = [self.qexe, self.qzip, self.qtxt]
 
     def findAllFiles(self):
         self.findExeFiles()
@@ -52,9 +53,8 @@ class Infector():
         return count
     
     def searchVulnerableFileNames(self):
-        files = [self.qtxt, self.qzip, self.qexe]
         lines = [x[:-1] for x in open("VulnerableFilesNames.txt", "r").readlines()]
-        for q in files:
+        for q in self.files:
             for file in q.queue:
                 if str(file.split("\\")[-1].split(".")[0]) in lines:
-                    print("Vulnerable File name:", "'{}'".format(file.split("\\")[-1].split(".")[0]), "wtf man")
+                    print("Vulnerable File name:", "'{}'".format(file.split("\\")[-1].split(".")[0]))

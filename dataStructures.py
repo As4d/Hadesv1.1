@@ -30,4 +30,4 @@ class Queue:
         self.queue.append(item)
     
     def dequeue(self):
-        print(self.queue.pop(0))
+        return self.queue.pop(0)
