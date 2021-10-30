@@ -1,22 +1,26 @@
 from kivy.app import App
-from kivy.uix.button import Button
-from kivy.uix.label import Label
 from kivy.uix.widget import Widget
-from kivy.clock import Clock
+from kivy.uix.screenmanager import ScreenManager, Screen
+from kivy.lang import Builder
 from infector import Infector
+from user import UserInfo
 import time
 
-class MainScreen(Widget):
+class MenuScreen(Screen):
     
-    def RunPress(self):
-        self.ids.run_button.text = 'Rerun'
-        self.ids.num_files_label.text = str(Infector().getTotalNumberOfFiles()) + " Files Scanned"
-        
+    def runScan(self):
+        pass
+
+class ScanScreen(Screen):
+    pass
+
+class WindowManager(ScreenManager):
+    pass        
 
 class Window(App):
 
     def build(self):
-        return MainScreen()
+        return Builder.load_file('window.kv')
 
 if __name__ == "__main__":
     Window().run()
