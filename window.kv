@@ -22,10 +22,11 @@ WindowManager:
         size_hint: 0.75 , 0.25
         
         Button:
-            id: testButton0
-            text: 'test'
+            id: exitButton
+            text: 'Exit'
             font_size: 32
             background_color: (100, 0, 0, 0.5)
+            on_release: app.stop()
         
         Button:
             id: testButton1
@@ -47,7 +48,7 @@ WindowManager:
             background_color: (100, 0, 0, 0.5)
             on_release: 
                 app.root.current = 'Scan'
-                root.manager.transition.direction = 'left'
+                root.manager.transition.direction = 'down'
         
         BoxLayout:
 

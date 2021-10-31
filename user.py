@@ -8,7 +8,7 @@ class UserInfo():
 
     def __init__(self):
         self.data = {
-            'MachineInfo': {'ipv4': '', 'MachineName': ''},
+            'NetworkInfo': {'ipv4': '', 'MachineName': ''},
             'OS' : {'system' : '', 'version' : ''},
             'LastScan': '',
             'FilesCounts' : {'txt' : '', 'zip' : '', 'exe' : ''}
@@ -34,10 +34,10 @@ class UserInfo():
         self.data['OS']['version'] = platform.version()
 
     def updateipv4(self):
-        self.data['MachineInfo']['ipv4'] = str(socket.gethostbyname(socket.gethostname()))
+        self.data['NetworkInfo']['ipv4'] = str(socket.gethostbyname(socket.gethostname()))
 
     def updateMachineName(self):
-        self.data['MachineInfo']['MachineName'] = str(socket.gethostname())
+        self.data['NetworkInfo']['MachineName'] = str(socket.gethostname())
 
     def updateLastScan(self):
         self.data['LastScan'] = "{}{}".format(str(datetime.datetime.now())[:10], str(datetime.datetime.now())[10:19])

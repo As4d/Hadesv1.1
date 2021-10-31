@@ -6,3 +6,8 @@ accounts
 statement
 statements
 bank
+passport
+drivers liscense
+pin
+pin number
+pins
