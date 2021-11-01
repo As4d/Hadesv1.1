@@ -7,20 +7,23 @@ from user import UserInfo
 import time
 
 class MenuScreen(Screen):
-    
-    def runScan(self):
-        pass
-
-class ScanScreen(Screen):
     pass
+
+class RunSelectionScreen(Screen):        
+    pass
+
+class SearchVulnerableFileNamesScreen(Screen):
+
+    def runSearchVulnerableFileNames(self):
+        print(Infector().searchVulnerableFileNames())
 
 class WindowManager(ScreenManager):
     pass        
 
-class Window(App):
+class Hades(App):
 
     def build(self):
-        return Builder.load_file('window.kv')
+        return Builder.load_file('hades.kv')
 
 if __name__ == "__main__":
-    Window().run()
+    Hades().run()

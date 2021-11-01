@@ -53,8 +53,11 @@ class Infector():
         return count
     
     def searchVulnerableFileNames(self):
+        temp = 0
         lines = [x[:-1] for x in open("VulnerableFilesNames.txt", "r").readlines()]
         for q in self.files:
             for file in q.queue:
                 if str(file.split("\\")[-1].split(".")[0]) in lines:
                     print("Vulnerable File name:", "'{}'".format(file.split("\\")[-1].split(".")[0]))
+                    temp += 1
+        return temp
