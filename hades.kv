@@ -146,9 +146,10 @@ WindowManager:
             value: 0
             min: 0
             max: 100
+    
     Button:
         id: backButton
-        pos_hint: {'x': 0.375,'y': 0.025}
+        pos_hint: {'x': 0,'y': 0.025}
         size_hint: 0.25 , 0.1
         text: 'Back'
         font_size: 32
@@ -156,3 +157,12 @@ WindowManager:
         on_release: 
             app.root.current = 'RunSelectionScreen'
             root.manager.transition.direction = 'right'
+    
+    Button:
+        id: runSearchVulnerableFileNamesButton
+        pos_hint: {'x': 0.375,'y': 0.025}
+        size_hint: 0.25 , 0.1
+        text: 'Run'
+        font_size: 32
+        background_color: (100, 0, 0, 0.5)
+        on_release: root.runSearchVulnerableFileNames()

