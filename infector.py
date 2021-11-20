@@ -7,7 +7,6 @@ class Infector():
         self.qtxt = Queue()
         self.qzip = Queue()
         self.qexe = Queue()
-        self.findAllFiles()
         self.files = [self.qexe, self.qzip, self.qtxt]
 
     def findAllFiles(self):

@@ -18,15 +18,18 @@ class SearchVulnerableFileNamesScreen(Screen):
     def __init__(self, **kw):
         super().__init__(**kw)
         self.infector = Infector()
+        self.infector.findAllFiles()
         self.increment = 100/(self.infector.getTotalNumberOfFiles())
         self.count = 0
 
     def runSearchVulnerableFileNames(self):
-        self.Clock = Clock.schedule_interval(self.updateProgressbar, 1/99999999999999999999999999999999)
+        self.Clock = Clock.schedule_interval(self.updateProgressbar, 0.0001)
         self.ids.progressLabel.text = str(self.count)
 
     def cancelProgressbar(self, *args):
         self.ids.progressLabel.text =  "{} Files".format(str(self.infector.searchVulnerableFileNames()))
+        self.ids.progressBar.value = 0
+        self.count = 0
         self.Clock.cancel()
     
     def updateProgressbar(self, *args):

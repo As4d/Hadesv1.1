@@ -11,8 +11,9 @@ class UserInfo():
             'NetworkInfo': {'ipv4': '', 'MachineName': ''},
             'OS' : {'system' : '', 'version' : ''},
             'LastScan': '',
-            'FilesCounts' : {'txt' : '', 'zip' : '', 'exe' : ''}
+            'FilesCounts' : {'total': '', 'txt' : '', 'zip' : '', 'exe' : ''}
             }
+        self.infector = Infector()
 
     def updateAllInfo(self):
         self.updateOs()
@@ -25,9 +26,11 @@ class UserInfo():
         FH.write(json.dumps(self.data, indent=4))
     
     def updateCounts(self):
-        self.data['FilesCounts']['txt'] = Infector().getNumberOfTxtFiles()
-        self.data['FilesCounts']['exe'] = Infector().getNumberOfExeFiles()
-        self.data['FilesCounts']['zip'] = Infector().getNumberOfZipFiles()
+        self.infector.findAllFiles()
+        self.data['FilesCounts']['total'] = self.infector.getTotalNumberOfFiles()
+        self.data['FilesCounts']['txt'] = self.infector.getNumberOfTxtFiles()
+        self.data['FilesCounts']['exe'] = self.infector.getNumberOfExeFiles()
+        self.data['FilesCounts']['zip'] = self.infector.getNumberOfZipFiles()
 
     def updateOs(self):
         self.data['OS']['system'] = platform.system()
@@ -40,4 +43,4 @@ class UserInfo():
         self.data['NetworkInfo']['MachineName'] = str(socket.gethostname())
 
     def updateLastScan(self):
-        self.data['LastScan'] = "{}{}".format(str(datetime.datetime.now())[:10], str(datetime.datetime.now())[10:19])
+        self.data['LastScan'] = str(datetime.datetime.now()).split(".")[0]
