@@ -58,14 +58,18 @@ WindowManager:
             Label:
                 size_hint: 0.1, 0.1
                 pos_hint: {'x': 0.1,'y': 0.9}
-                id: lastScan
+                id: machineInfo
                 text: 'Machine Info'
             
             Label:
-                id: lastScan
-                text: 'Test:'
+                id: machineName
+                text: 'MachineName:'
                 font_size: 16
-                
+            
+            Label:
+                id: lastScan
+                text: 'Last Scan:'
+                font_size: 16
 
 <RunSelectionScreen>:
 

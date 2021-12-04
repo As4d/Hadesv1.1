@@ -6,9 +6,16 @@ from kivy.clock import Clock
 from infector import Infector
 from user import UserInfo
 import time
+import json     
 
 class MenuScreen(Screen):
-    pass
+
+    def __init__(self, **kw):
+        super().__init__(**kw)
+        self.user = UserInfo()
+        self.user.writeToJson()
+        self.FH = open('User.json', 'r')
+        self.data = json.load(self.FH)
 
 class RunSelectionScreen(Screen):        
     pass
