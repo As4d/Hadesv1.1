@@ -13,7 +13,7 @@ class UserInfo:
             "NetworkInfo": {"ipv4": "", "MachineName": "", "UserId": ""},
             "OS": {"system": "", "version": ""},
             "ScanInfo": {"LastScan": "", "ScanCount": "1"},
-            "FilesCounts": {"total": "", "txt": "", "zip": "", "exe": ""},
+            "FileCounts": {},
         }
         self.infector = Infector()
 
@@ -31,11 +31,11 @@ class UserInfo:
         FH.write(json.dumps(self.data, indent=4))
 
     def updateCounts(self):
-        self.infector.findAllFiles()
-        self.data["FilesCounts"]["total"] = self.infector.getTotalNumberOfFiles()
-        self.data["FilesCounts"]["txt"] = self.infector.getNumberOfTxtFiles()
-        self.data["FilesCounts"]["exe"] = self.infector.getNumberOfExeFiles()
-        self.data["FilesCounts"]["zip"] = self.infector.getNumberOfZipFiles()
+        fileExtensions = ["txt", "zip", "exe"]
+        for extension in fileExtensions:
+            self.infector.findFiles(extension)
+            self.data["FileCounts"][extension] = len(self.infector.files[extension])
+        self.data["FileCounts"]["total"] = self.infector.getTotalNumberOfFiles()
 
     def updateOs(self):
         self.data["OS"]["system"] = platform.system()
@@ -106,7 +106,7 @@ class DatabaseManager:
         self, IpAddress, TotalFileCount, LastScan, OperatingSystem, NumberOfScans
     ):
         self.db.execute(
-            "UPDATE User SET IpAddress = ?, TotalFileCount = ?, LastScan = ?, OperatingSystem = ?, NumberOfScans = ?",
+            "UPDATE User SET IpAddress = ? TotalFileCount = ? LastScan = ? OperatingSystem = ? NumberOfScans = ?",
             [IpAddress, TotalFileCount, LastScan, OperatingSystem, NumberOfScans],
         )
         self.connection.commit()
@@ -140,16 +140,6 @@ class DatabaseManager:
         )
         self.connection.commit()
 
-    def selectUser(self):
-        print("==================== DATABASE TABLE User ====================")
-        for row in self.db.execute("SELECT * FROM User"):
-            print(row)
-
-    def selectUserFiles(self):
-        print("==================== DATABASE TABLE UserFiles ====================")
-        for row in self.db.execute("SELECT * FROM UserFiles"):
-            print(row)
-
     def updateUser(self):
         FH = open("User.json")
         data = json.load(FH)
@@ -180,6 +170,3 @@ class DatabaseManager:
             data["FilesCounts"]["LastScan"],
             data["FilesCounts"]["system"],
         )
-
-
-DatabaseManager().updateUser()
