@@ -6,27 +6,28 @@ from kivy.clock import Clock
 from infector import Infector
 from user import UserInfo
 import time
-import json     
+import json
+
 
 class MenuScreen(Screen):
-
     def __init__(self, **kw):
         super().__init__(**kw)
         self.user = UserInfo()
         self.user.writeToJson()
-        self.FH = open('User.json', 'r')
+        self.FH = open("User.json", "r")
         self.data = json.load(self.FH)
 
-class RunSelectionScreen(Screen):        
+
+class RunSelectionScreen(Screen):
     pass
 
-class SearchVulnerableFileNamesScreen(Screen):
 
+class SearchVulnerableFileNamesScreen(Screen):
     def __init__(self, **kw):
         super().__init__(**kw)
         self.infector = Infector()
         self.infector.findAllFiles()
-        self.increment = 100/(self.infector.getTotalNumberOfFiles())
+        self.increment = 100 / (self.infector.getTotalNumberOfFiles())
         self.count = 0
 
     def runSearchVulnerableFileNames(self):
@@ -34,25 +35,31 @@ class SearchVulnerableFileNamesScreen(Screen):
         self.ids.progressLabel.text = str(self.count)
 
     def cancelProgressbar(self, *args):
-        self.ids.progressLabel.text =  "{} Files".format(str(self.infector.searchVulnerableFileNames()))
+        self.ids.progressLabel.text = "{} Files".format(
+            str(self.infector.searchVulnerableFileNames())
+        )
         self.ids.progressBar.value = 0
         self.count = 0
         self.Clock.cancel()
-    
+
     def updateProgressbar(self, *args):
         self.ids.progressBar.value += self.increment
         self.count += 1
-        self.ids.progressLabel.text = "{}/{}".format(str(self.count), str(self.infector.getTotalNumberOfFiles()))
+        self.ids.progressLabel.text = "{}/{}".format(
+            str(self.count), str(self.infector.getTotalNumberOfFiles())
+        )
         if self.ids.progressBar.value == 100:
             self.cancelProgressbar()
 
+
 class WindowManager(ScreenManager):
-    pass        
+    pass
+
 
 class Hades(App):
-
     def build(self):
-        return Builder.load_file('hades.kv')
+        return Builder.load_file("hades.kv")
+
 
 if __name__ == "__main__":
     Hades().run()
