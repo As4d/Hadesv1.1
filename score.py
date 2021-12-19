@@ -1,3 +1,3 @@
 class Score:
-    def __init__(self):
-        self.flags = None
+	def __init__(self):
+		self.flags = None
