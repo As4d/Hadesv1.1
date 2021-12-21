@@ -72,6 +72,16 @@ class UserInfo:
             self.data["NetworkInfo"]["UserId"] = str(uuid.uuid4())
 
 
+class FileHelper:
+    def __init__(self):
+        self.FH = open("User.json")
+        self.UserData = json.load(self.FH)
+        self.UserId = None
+
+    def getUserId(self):
+        self.UserId = self.UserData["NetworkInfo"]["UserId"]
+
+
 class DatabaseManager:
     def __init__(self):
         self.connection = sqlite3.connect("test.db")
@@ -95,7 +105,7 @@ class DatabaseManager:
             """
 		CREATE TABLE UserFiles (
 			Id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
-			UserId INT NOT NULL,
+			UserId NOT NULL,
 			FileType VARCHAR(4) not NULL,
 			FileCount INT NOT NULL
 		);
@@ -103,11 +113,24 @@ class DatabaseManager:
         )
 
     def updateIntoUser(
-        self, IpAddress, TotalFileCount, LastScan, OperatingSystem, NumberOfScans
+        self,
+        UserId,
+        IpAddress,
+        TotalFileCount,
+        LastScan,
+        OperatingSystem,
+        NumberOfScans,
     ):
         self.db.execute(
-            "UPDATE User SET IpAddress = ? TotalFileCount = ? LastScan = ? OperatingSystem = ? NumberOfScans = ?",
-            [IpAddress, TotalFileCount, LastScan, OperatingSystem, NumberOfScans],
+            "UPDATE User SET IpAddress = ?, TotalFileCount = ?, LastScan = ?, OperatingSystem = ?, NumberOfScans = ? WHERE UserId = ?",
+            [
+                IpAddress,
+                TotalFileCount,
+                LastScan,
+                OperatingSystem,
+                NumberOfScans,
+                UserId,
+            ],
         )
         self.connection.commit()
 
@@ -133,10 +156,20 @@ class DatabaseManager:
         )
         self.connection.commit()
 
-    def insertIntoUserFiles(self, UserId, TotalFileCount, FileType, FileCount):
+    def updateIntoUserFiles(self, UserId, FileType, FileCount):
         self.db.execute(
-            "INSERT INTO UserFiles VALUES (NULL,?,?,?,?)",
-            [UserId, TotalFileCount, FileType, FileCount],
+            """UPDATE UserFiles SET FileCount = ? WHERE UserId = ? AND FileType = ?""",
+            [FileCount, UserId, FileType],
+        )
+        self.connection.commit()
+        print(self.db.rowcount)
+        if self.db.rowcount == 0:
+            self.insertIntoUserFiles(self, UserId, FileType, FileCount)
+    
+    def insertIntoUserFiles(self, UserId, FileType, FileCount):
+        self.db.execute(
+            "INSERT INTO UserFiles VALUES (NULL,?,?,?)",
+            [UserId, FileType, FileCount],
         )
         self.connection.commit()
 
@@ -144,18 +177,22 @@ class DatabaseManager:
         FH = open("User.json")
         data = json.load(FH)
         try:
-            self.updateIntoUser(
+
+            self.insertIntoUser(
+                data["NetworkInfo"]["UserId"],
                 data["NetworkInfo"]["ipv4"],
-                data["FilesCounts"]["total"],
+                data["FileCounts"]["total"],
                 data["ScanInfo"]["LastScan"],
                 data["OS"]["system"],
                 data["ScanInfo"]["ScanCount"],
             )
+
         except:
-            self.insertIntoUser(
+
+            self.updateIntoUser(
                 data["NetworkInfo"]["UserId"],
                 data["NetworkInfo"]["ipv4"],
-                data["FilesCounts"]["total"],
+                data["FileCounts"]["total"],
                 data["ScanInfo"]["LastScan"],
                 data["OS"]["system"],
                 data["ScanInfo"]["ScanCount"],
@@ -164,9 +201,21 @@ class DatabaseManager:
     def updateUserFiles(self):
         FH = open("User.json")
         data = json.load(FH)
-        print(
-            data["NetworkInfo"]["ipv4"],
-            data["FilesCounts"]["total"],
-            data["FilesCounts"]["LastScan"],
-            data["FilesCounts"]["system"],
-        )
+
+        for type in data["FileCounts"]:
+            if type == "total":
+                break
+            else:
+                self.updateIntoUserFiles(
+                    data["NetworkInfo"]["UserId"], type, data["FileCounts"][type]
+                )
+
+
+def main():
+    UserInfo().writeToJson()
+    DatabaseManager().updateUser()
+    DatabaseManager().updateUserFiles()
+
+
+if __name__ == "__main__":
+    main()
