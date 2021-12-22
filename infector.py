@@ -1,4 +1,3 @@
-from dataStructures import Queue
 import os
 import re
 
@@ -12,7 +11,7 @@ class Infector:
         for files in os.walk(r"C:\Users\asadk\Documents\TEST"):  # TODO os.walk
             for file in files[2]:
                 if file.split(".")[-1] == extension.lower():
-                    print("File found: " + files[0] + "\\" + file + "\n")
+                    #print("File found: " + files[0] + "\\" + file + "\n")
                     filesFound.append(files[0] + "\\" + file)
                     self.files[extension.lower()] = filesFound
     
