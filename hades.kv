@@ -4,9 +4,11 @@ WindowManager:
     MenuScreen:
     RunSelectionScreen:
     SearchVulnerableFileNamesScreen:
+    SimulateAttackScreen:
+
 
 <MenuScreen>:
-
+    
     name: 'Menu'
 
     Label:
@@ -31,7 +33,7 @@ WindowManager:
         
         Button:
             id: testButton1
-            text: 'test'
+            text: 'Settings'
             font_size: 32
             background_color: (100, 0, 0, 0.5)
 
@@ -53,7 +55,7 @@ WindowManager:
         
         BoxLayout:
 
-            orientation: 'vertical'
+            orientation: 'vertical' 
 
             Label:
                 size_hint: 0.1, 0.1
@@ -70,6 +72,7 @@ WindowManager:
                 id: lastScan
                 text: 'Last Scan:'
                 font_size: 16
+
 
 <RunSelectionScreen>:
 
@@ -99,7 +102,7 @@ WindowManager:
         
         Button:
             id: testButton1
-            text: 'test'
+            text: 'Scan Settings'
             font_size: 24
             background_color: (100, 0, 0, 0.5)
 
@@ -116,7 +119,9 @@ WindowManager:
             text: 'Simulate attack'
             font_size: 24
             background_color: (100, 0, 0, 0.5)
-            on_release: root.inc()
+            on_release:
+                app.root.current = 'SimulateAttack'
+                root.manager.transition.direction = 'left'
             
         Button:
             
@@ -127,6 +132,7 @@ WindowManager:
             on_release:
                 app.root.current = 'SearchVulnerableFileNames'
                 root.manager.transition.direction = 'left'
+
 
 <SearchVulnerableFileNamesScreen>:
     
@@ -170,3 +176,47 @@ WindowManager:
         font_size: 32
         background_color: (100, 0, 0, 0.5)
         on_release: root.runSearchVulnerableFileNames()
+
+
+<SimulateAttackScreen>:
+    
+    name: 'SimulateAttack'
+
+    BoxLayout:
+
+        orientation: 'vertical'
+        pos_hint: {'x': 0,'y': 0.125}
+        size_hint: 1, 0.975
+
+        Label:
+
+            id: progressLabel
+            text: ''
+            font_size: 32
+        
+        ProgressBar:
+
+            id: progressBar
+            value: 0
+            min: 0
+            max: 100
+    
+    Button:
+        id: backButton
+        pos_hint: {'x': 0,'y': 0.025}
+        size_hint: 0.25 , 0.1
+        text: 'Back'
+        font_size: 32
+        background_color: (100, 0, 0, 0.5)
+        on_release: 
+            app.root.current = 'RunSelectionScreen'
+            root.manager.transition.direction = 'right'
+    
+    Button:
+        id: runSimulateAttackButton
+        pos_hint: {'x': 0.375,'y': 0.025}
+        size_hint: 0.25 , 0.1
+        text: 'Run'
+        font_size: 32
+        background_color: (100, 0, 0, 0.5)
+        on_release: root.runSimulateAttack()
