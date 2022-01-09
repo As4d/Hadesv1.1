@@ -2,36 +2,18 @@ import pyodbc
 import json
 
 
-class DatabaseManager:  
+class DataAccess:
     def __init__(self):
-        self.connectionString = "DRIVER={ODBC Driver 17 for SQL Server};SERVER=tcp:hadesdemo.database.windows.net;PORT=1433;database=hadesdemo;uid=hadesdemoadmin;pwd=AM?z5#r$"
+        self.connectionString = "DRIVER={ODBC Driver 17 for SQL Server};SERVER=tcp:hadesdemo.database.windows.net;PORT=1433;database=hadesdemo;uid=hadesdemoadmin;pwd=AM?z5#r$" # REQURIES PASSWORD AND UID AND DATABASE NAME
 
-    def updateIntoUser(
-        self,
-        UserId,
-        IpAddress,
-        TotalFileCount,
-        LastScan,
-        OperatingSystem,
-        NumberOfScans,
-    ):
-
+    def GetUserCount(self):
         with pyodbc.connect(self.connectionString) as conn:
             with conn.cursor() as cursor:
-                cursor.execute(
-                    "UPDATE [User] SET IpAddress = ?, TotalFileCount = ?, LastScan = ?, OperatingSystem = ?, NumberOfScans = ? WHERE UserId = ?",
-                    [
-                        IpAddress,
-                        TotalFileCount,
-                        LastScan,
-                        OperatingSystem,
-                        NumberOfScans,
-                        UserId,
-                    ],
-                )
-        
+                cursor.execute("SELECT COUNT(UserId) FROM [User]")
+                row = cursor.fetchone()
+                return row[0]
 
-    def insertIntoUser(
+    def updateUser(
         self,
         UserId,
         IpAddress,
@@ -43,24 +25,54 @@ class DatabaseManager:
         with pyodbc.connect(self.connectionString) as conn:
             with conn.cursor() as cursor:
                 cursor.execute(
-                    "INSERT INTO [User] VALUES (?,?,?,?,?,?)",
-                    [
-                        UserId,
-                        IpAddress,
-                        TotalFileCount,
-                        LastScan,
-                        OperatingSystem,
-                        NumberOfScans,
-                    ],
+                    "UPDATE [User] SET IpAddress = '"
+                    + IpAddress
+                    + "', TotalFileCount = "
+                    + str(TotalFileCount)
+                    + ", LastScan = '"
+                    + LastScan
+                    + "', OperatingSystem = '"
+                    + OperatingSystem
+                    + "', NumberOfScans = "
+                    + str(NumberOfScans)
+                    + " WHERE UserId = '"
+                    + UserId
+                    + "'"
                 )
-        
+
+    def createUser(
+        self,
+        UserId,
+        IpAddress,
+        TotalFileCount,
+        LastScan,
+        OperatingSystem,
+        NumberOfScans,
+    ):
+        with pyodbc.connect(self.connectionString) as conn:
+            with conn.cursor() as cursor:
+                cursor.execute(
+                    "INSERT INTO [User] (UserId, IpAddress, TotalFileCount, LastScan, OperatingSystem, NumberOfScans) VALUES ('"
+                    + UserId
+                    + "','"
+                    + IpAddress
+                    + "',"
+                    + str(TotalFileCount)
+                    + ",'"
+                    + LastScan
+                    + "','"
+                    + OperatingSystem
+                    + "',"
+                    + str(NumberOfScans)
+                    + ")"
+                )
 
     def updateIntoUserFiles(self, UserId, FileType, FileCount):
         self.db.execute(
             """UPDATE UserFiles SET FileCount = ? WHERE UserId = ? AND FileType = ?""",
             [FileCount, UserId, FileType],
         )
-        
+        self.connection.commit()
         if self.db.rowcount == 0:
             self.insertIntoUserFiles(UserId, FileType, FileCount)
 
@@ -71,12 +83,12 @@ class DatabaseManager:
         )
         self.connection.commit()
 
-    def updateUser(self):
+    def updateUserTable(self):
         FH = open("User.json")
         data = json.load(FH)
         try:
 
-            self.insertIntoUser(
+            self.createUser(
                 data["NetworkInfo"]["UserId"],
                 data["NetworkInfo"]["ipv4"],
                 data["FileCounts"]["total"],
@@ -87,7 +99,7 @@ class DatabaseManager:
 
         except:
 
-            self.updateIntoUser(
+            self.updateUser(
                 data["NetworkInfo"]["UserId"],
                 data["NetworkInfo"]["ipv4"],
                 data["FileCounts"]["total"],
