@@ -5,6 +5,7 @@ import platform
 import sqlite3
 import uuid
 from infector import Infector
+from infector import FileHelper
 
 
 class UserInfo:
@@ -15,8 +16,7 @@ class UserInfo:
             "ScanInfo": {"LastScan": "", "ScanCount": "1"},
             "FileCounts": {},
         }
-        self.infector = Infector()
-        self.UserId = ''
+        self.infector = Infector(FileHelper())
 
     def updateAllInfo(self):
         self.updateOs()
@@ -26,9 +26,6 @@ class UserInfo:
 
     def writeToJson(self):
         self.updateAllInfo()
-        self.updateCounts()  # DELETE
-        self.updateScanInfo()  # DELETE
-        self.getUserId()
         FH = open("User.json", "w")
         FH.write(json.dumps(self.data, indent=4))
 
@@ -38,6 +35,7 @@ class UserInfo:
             self.infector.findFiles(extension)
             self.data["FileCounts"][extension] = len(self.infector.files[extension])
         self.data["FileCounts"]["total"] = self.infector.getTotalNumberOfFiles()
+        self.writeToJson()
 
     def updateOs(self):
         self.data["OS"]["system"] = platform.system()
@@ -61,6 +59,7 @@ class UserInfo:
             )
         except:
             pass
+        self.writeToJson()
 
     def updateUserId(self):
         try:
@@ -72,6 +71,3 @@ class UserInfo:
                 self.data["NetworkInfo"]["UserId"] = data["NetworkInfo"]["UserId"]
         except:
             self.data["NetworkInfo"]["UserId"] = str(uuid.uuid4())
-
-    def getUserId(self):
-        return self.UserData["NetworkInfo"]["UserId"]
