@@ -4,7 +4,7 @@ import json
 
 class DataAccess:
     def __init__(self):
-        self.connectionString = "DRIVER={ODBC Driver 17 for SQL Server};SERVER=tcp:hadesdemo.database.windows.net;PORT=1433;database=hadesdemo;uid=hadesdemoadmin;pwd=AM?z5#r$" # REQURIES PASSWORD AND UID AND DATABASE NAME
+        self.connectionString = "DRIVER={ODBC Driver 17 for SQL Server};SERVER=tcp:hadesdemo.database.windows.net;PORT=1433;database=hadesdemo;uid=hadesdemoadmin;pwd=*******" # REQURIES PASSWORD AND UID AND DATABASE NAME
 
     def GetUserCount(self):
         with pyodbc.connect(self.connectionString) as conn:
