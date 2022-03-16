@@ -61,6 +61,7 @@ class SearchVulnerableFileNamesScreen(Screen):
         super().__init__(**kw)
         self.count = 0
         self.fileHelper = FileHelper()
+        self.infector = Infector(self.fileHelper)
 
     def runSearchVulnerableFileNames(self):
         fileExtensions = ["txt", "zip", "exe"]
@@ -72,7 +73,7 @@ class SearchVulnerableFileNamesScreen(Screen):
 
     def cancelProgressbar(self, *args):
         self.ids.progressLabel.text = "{} Files".format(
-            str(self.infector.searchVulnerableFileNames())
+            str(self.infector.findVulnerableFileNames())
         )
         self.ids.progressBar.value = 0
         self.count = 0

@@ -5,11 +5,15 @@ from filehelper import FileHelper
 
 
 class Infector:
-    def __init__(self):
-        self.fileHelper = FileHelper()
+    def __init__(self, obj):
+        self.fileHelper = obj
+        self.VulnerableFileNameFlags = 0
+        self.VulnerableTextInFileFlags = 0
+        self.PythonFilesAccessed = 0
 
     def findVulnerableFileNames(self):
         temp = 0
+        count = 0
         vulnerablestrings = [
             "password",
             "account",
@@ -25,7 +29,9 @@ class Infector:
             for string in vulnerablestrings:
                 x = re.findall("(?i)({}):*s*".format(string), filename)
                 if x != []:
-                    print(x)
+                    print(x, file)
+                    count += 1
+        return count
 
     def findVulnerablitiesInTxt(self, file):
         sentences = [x.strip() for x in open(file, "r").readlines()]
