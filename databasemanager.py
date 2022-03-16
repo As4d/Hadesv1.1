@@ -1,100 +1,82 @@
-import pyodbc
 import json
+import requests
+from datetime import datetime
 
 
-class DatabaseManager:  
-    def __init__(self):
-        self.connectionString = "DRIVER={ODBC Driver 17 for SQL Server};SERVER=tcp:hadesdemo.database.windows.net;PORT=1433;database=hadesdemo;uid=hadesdemoadmin;pwd=AM?z5#r$"
-
+class DatabaseManager:
     def updateIntoUser(
-        self,
-        UserId,
-        IpAddress,
-        TotalFileCount,
-        LastScan,
-        OperatingSystem,
-        NumberOfScans,
+        self, UserId, IpAddress, TotalFileCount, OperatingSystem, NumberOfScans
     ):
 
-        with pyodbc.connect(self.connectionString) as conn:
-            with conn.cursor() as cursor:
-                cursor.execute(
-                    "UPDATE [User] SET IpAddress = ?, TotalFileCount = ?, LastScan = ?, OperatingSystem = ?, NumberOfScans = ? WHERE UserId = ?",
-                    [
-                        IpAddress,
-                        TotalFileCount,
-                        LastScan,
-                        OperatingSystem,
-                        NumberOfScans,
-                        UserId,
-                    ],
+        jsonData = {
+            "UserId": UserId,
+            "IpAddress": IpAddress,
+            "LastScan": datetime.now().isoformat(),
+            "NoOfScans": NumberOfScans,
+            "OperatingSystem": OperatingSystem,
+            "TotalFileCount": TotalFileCount,
+        }
+        try: 
+            response = requests.put(
+                "https://hadesdemowebapi20220114182325.azurewebsites.net/api/updateuser",
+                json=jsonData,
+            )
+
+            if response.text == "0":
+                self.insertIntoUser(
+                    UserId, IpAddress, TotalFileCount, OperatingSystem, NumberOfScans
                 )
-        
+
+        except (requests.ConnectionError, requests.Timeout) as exception:
+            print("Failed to connect")
+            return False
 
     def insertIntoUser(
-        self,
-        UserId,
-        IpAddress,
-        TotalFileCount,
-        LastScan,
-        OperatingSystem,
-        NumberOfScans,
+        self, UserId, IpAddress, TotalFileCount, OperatingSystem, NumberOfScans
     ):
-        with pyodbc.connect(self.connectionString) as conn:
-            with conn.cursor() as cursor:
-                cursor.execute(
-                    "INSERT INTO [User] VALUES (?,?,?,?,?,?)",
-                    [
-                        UserId,
-                        IpAddress,
-                        TotalFileCount,
-                        LastScan,
-                        OperatingSystem,
-                        NumberOfScans,
-                    ],
-                )
-        
+
+        jsonData = {
+            "UserId": UserId,
+            "IpAddress": IpAddress,
+            "LastScan": datetime.now().isoformat(),
+            "NoOfScans": NumberOfScans,
+            "OperatingSystem": OperatingSystem,
+            "TotalFileCount": TotalFileCount,
+        }
+        response = requests.post(
+            "https://hadesdemowebapi20220114182325.azurewebsites.net/api/createuser",
+            json=jsonData,
+        )
+
+        if response.text == "false":
+            pass
 
     def updateIntoUserFiles(self, UserId, FileType, FileCount):
-        self.db.execute(
-            """UPDATE UserFiles SET FileCount = ? WHERE UserId = ? AND FileType = ?""",
-            [FileCount, UserId, FileType],
+        jsonData = {"UserId": UserId, "FileType": FileType, "FileCount": FileCount}
+        response = requests.put(
+            "https://hadesdemowebapi20220114182325.azurewebsites.net/api/updateuserfiles",
+            json=jsonData,
         )
-        
-        if self.db.rowcount == 0:
-            self.insertIntoUserFiles(UserId, FileType, FileCount)
+        if response == "0":
+            self.insertIntoUserFiles()
 
     def insertIntoUserFiles(self, UserId, FileType, FileCount):
-        self.db.execute(
-            "INSERT INTO UserFiles VALUES (NULL,?,?,?)",
-            [UserId, FileType, FileCount],
+        jsonData = {"UserId": UserId, "FileType": FileType, "FileCount": FileCount}
+        response = requests.post(
+            "https://hadesdemowebapi20220114182325.azurewebsites.net/api/createuserfiles",
+            json=jsonData,
         )
-        self.connection.commit()
 
     def updateUser(self):
         FH = open("User.json")
         data = json.load(FH)
-        try:
-
-            self.insertIntoUser(
-                data["NetworkInfo"]["UserId"],
-                data["NetworkInfo"]["ipv4"],
-                data["FileCounts"]["total"],
-                data["ScanInfo"]["LastScan"],
-                data["OS"]["system"],
-                data["ScanInfo"]["ScanCount"],
-            )
-
-        except:
-
-            self.updateIntoUser(
-                data["NetworkInfo"]["UserId"],
-                data["NetworkInfo"]["ipv4"],
-                data["FileCounts"]["total"],
-                data["ScanInfo"]["LastScan"],
-                data["OS"]["system"],
-                data["ScanInfo"]["ScanCount"],
-            )
+        self.updateIntoUser(
+            str(data["NetworkInfo"]["UserId"]),
+            str(data["NetworkInfo"]["ipv4"]),
+            str(data["FileCounts"]["total"]),
+            str(data["OS"]["version"]),
+            str(data["ScanInfo"]["ScanCount"]),
+        )
 
     def updateUserFiles(self):
         FH = open("User.json")
@@ -105,5 +87,7 @@ class DatabaseManager:
                 break
             else:
                 self.updateIntoUserFiles(
-                    data["NetworkInfo"]["UserId"], type, data["FileCounts"][type]
+                    str(data["NetworkInfo"]["UserId"]),
+                    str(type),
+                    str(data["FileCounts"][type]),
                 )
