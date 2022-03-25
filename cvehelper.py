@@ -2,7 +2,7 @@ import json
 
 class CVEHelper:
     def __init__(self):
-        self.__versions = {
+        self.versions = {
             "10240": "1507",
             "10586": "1511",
             "14393": "1607",
@@ -17,18 +17,9 @@ class CVEHelper:
             "19043": "21H1",
             "19044": "21H2"
         }
-        self._winver = ""
 
-    def __getBuildNumber(self):
-        FH = open("User.json")
-        data = json.load(FH)
-        return data["OS"]["BuildNumber"]
-
-    def getWinver(self):
-        return self.__winver
-
-    def _setWinver(self):
-        self.__winver = self.__versions[self.__getBuildNumber()]
+    def getWinver(self, buildNumber):
+        return self.versions[buildNumber]
 
     def getNumberOfVulnerablilites(self):
         pass
