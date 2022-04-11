@@ -16,7 +16,7 @@ class DatabaseManager:
             "OperatingSystem": OperatingSystem,
             "TotalFileCount": TotalFileCount,
         }
-        try: 
+        try:
             response = requests.put(
                 "https://hadesdemowebapi20220114182325.azurewebsites.net/api/updateuser",
                 json=jsonData,

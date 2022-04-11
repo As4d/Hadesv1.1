@@ -3,18 +3,19 @@ import datetime
 import platform
 import uuid
 import requests
-from infector import FileHelper
+from cvehelper import CVEHelper
 
 
-class UserInfo:
-    def __init__(self):
+class UserInfo():
+    def __init__(self, obj):
         self.data = {
             "NetworkInfo": {"ipv4": "", "UserId": ""},
             "OS": {"system": "", "version": ""},
             "ScanInfo": {"LastScan": "", "ScanCount": "1"},
             "FileCounts": {},
         }
-        self.fileHelper = FileHelper()
+        self.fileHelper = obj
+        self.cvehelper = CVEHelper()
 
     def updateAllInfo(self):
         self.updateOs()
@@ -27,17 +28,16 @@ class UserInfo:
         FH.write(json.dumps(self.data, indent=4))
 
     def updateCounts(self):
-        fileExtensions = ["txt", "zip", "exe"]
+        fileExtensions = self.fileHelper.getFileExtensions()
         for extension in fileExtensions:
-            self.data["FileCounts"][extension] = len(
-                self.fileHelper.findAllFiles(extension)
-            )
+            self.data["FileCounts"][extension] = self.fileHelper.getTotalNumberOfFilesExt(extension)
         self.data["FileCounts"]["total"] = self.fileHelper.getTotalNumberOfFiles()
         self.writeToJson()
 
     def updateOs(self):
         self.data["OS"]["system"] = platform.system()
         self.data["OS"]["BuildNumber"] = platform.version().split('.')[2]
+        self.data["OS"]["version"] = self.cvehelper.getWinver(platform.version().split('.')[2])
 
     def updateipv4(self):
         try:

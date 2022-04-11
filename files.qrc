@@ -251,10 +251,18 @@
     <file>icons/16x16/cil-zoom-out.png</file>
   </qresource>
   <qresource prefix="24x24">
-    <file>icons/hadestransparent.png</file>
+    <file>icons/24x24/cil-chart-line.png</file>
+    <file>icons/24x24/cil-media-play.png</file>
     <file>icons/24x24/cil-check-alt.png</file>
     <file>icons/24x24/cil-chevron-double-up-alt.png</file>
     <file>icons/24x24/cil-menu.png</file>
+  </qresource>
+  <qresource prefix="Scores">
+    <file>icons/scores/Green.png</file>
+    <file>icons/scores/Lime.png</file>
+    <file>icons/scores/Orange.png</file>
+    <file>icons/scores/Red.png</file>
+    <file>icons/scores/Yellow.png</file>
   </qresource>
   <qresource prefix="20x20">
     <file>icons/20x20/cil-3d.png</file>

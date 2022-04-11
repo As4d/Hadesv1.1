@@ -3,18 +3,24 @@ import pathlib
 
 class FileHelper:
 
-    def __init__(self):
+    def __init__(self): 
         self.files = {}
+        self.fileExtensions = ["txt", "zip", "exe"]
+
+    def setFileExtensions(self, arr):
+        self.fileExtensions = arr
+    
+    def getFileExtensions(self):
+        return self.fileExtensions
 
     def findAllFiles(self, extension):
         filesFound = []
-        for files in os.walk(pathlib.Path.home()):  # pathlib.Path.home() / r"C:\Users\asadk\Documents\TEST"
+        for files in os.walk(r"C:\Users\asadk\Documents\TEST"):  # pathlib.Path.home() / r"C:\Users\asadk\Documents\TEST"
             for file in files[2]:
                 if file.split(".")[-1] == extension.lower():
                     #print("File found: " + files[0] + "\\" + file + "\n")
                     filesFound.append(files[0] + "\\" + file)
         self.files[extension] = filesFound
-        return filesFound
 
     def findFilesInDir(self, extension, dir):
         files = {}
@@ -29,10 +35,13 @@ class FileHelper:
     
     def getTotalNumberOfFiles(self):
         total = 0
-        for key in self.files:
+        for key in self.fileExtensions:
             total += len(self.files[key])
-        self.files['total'] = str(total)
-        return total
+        self.files['total'] = total
+        return self.files['total']
     
     def getTotalNumberOfFilesExt(self, extension):
         return len(self.files[extension])
+    
+    def getFilesList(self, extension):
+        return self.files[extension]
