@@ -1,25 +1,21 @@
 # PynSource Version 1.2
 {'type':'meta', 'info1':'Lorem ipsum dolor sit amet, consectetur adipiscing elit is latin. Comments are saved.'}
-{'type':'umlshape', 'id':'Infector', 'x':718, 'y':339, 'width':210, 'height':282, 'attrs': 'files|qexe|qtxt|qzip', 'meths': '__init__|findAllFiles|findExeFiles|findTxtFiles|findZipFiles|getNumberOfExeFiles|getNumberOfTxtFiles|getNumberOfZipFiles|getTotalNumberOfFiles|searchVulnerableFileNames'}
-{'type':'umlshape', 'id':'Queue', 'x':499, 'y':394, 'width':98, 'height':154, 'attrs': 'queue', 'meths': '__init__|dequeue|enqueue|getLenQueue|isEmpty'}
-{'type':'umlshape', 'id':'MenuScreen', 'x':399, 'y':95, 'width':110, 'height':28, 'attrs': '', 'meths': ''}
-{'type':'umlshape', 'id':'RunSelectionScreen', 'x':195, 'y':95, 'width':190, 'height':28, 'attrs': '', 'meths': ''}
-{'type':'umlshape', 'id':'SearchVulnerableFileNamesScreen', 'x':653, 'y':83, 'width':320, 'height':202, 'attrs': 'Clock|count|ids|increment|infector', 'meths': '__init__|cancelProgressbar|runSearchVulnerableFileNames|updateProgressbar'}
-{'type':'umlshape', 'id':'WindowManager', 'x':13, 'y':59, 'width':140, 'height':28, 'attrs': '', 'meths': ''}
-{'type':'umlshape', 'id':'Hades', 'x':125, 'y':118, 'width':60, 'height':64, 'attrs': '', 'meths': 'build'}
-{'type':'umlshape', 'id':'Screen', 'x':410, 'y':44, 'width':70, 'height':28, 'attrs': '', 'meths': ''}
-{'type':'umlshape', 'id':'ScreenManager', 'x':14, 'y':6, 'width':140, 'height':28, 'attrs': '', 'meths': ''}
-{'type':'umlshape', 'id':'App', 'x':161, 'y':12, 'width':40, 'height':28, 'attrs': '', 'meths': ''}
-{'type':'umlshape', 'id':'UserInfo', 'x':13, 'y':422, 'width':146, 'height':202, 'attrs': 'data', 'meths': '__init__|updateAllInfo|updateCounts|updateLastScan|updateMachineName|updateOs|updateipv4|writeToJson'}
-{'type':'umlshape', 'id':'platform.version', 'x':4, 'y':342, 'width':170, 'height':28, 'attrs': '', 'meths': ''}
-{'type':'umlshape', 'id':'platform.system', 'x':182, 'y':344, 'width':160, 'height':28, 'attrs': '', 'meths': ''}
-{'type':'umlshape', 'id':'Stack', 'x':408, 'y':397, 'width':74, 'height':154, 'attrs': 'stack', 'meths': '__init__|isEmpty|peek|pop|push'}
-{'type':'edge', 'id':'Queue_to_Infector', 'source':'Queue', 'target':'Infector', 'uml_edge_type': 'composition'}
-{'type':'edge', 'id':'MenuScreen_to_Screen', 'source':'MenuScreen', 'target':'Screen', 'uml_edge_type': 'generalisation'}
-{'type':'edge', 'id':'RunSelectionScreen_to_Screen', 'source':'RunSelectionScreen', 'target':'Screen', 'uml_edge_type': 'generalisation'}
-{'type':'edge', 'id':'WindowManager_to_ScreenManager', 'source':'WindowManager', 'target':'ScreenManager', 'uml_edge_type': 'generalisation'}
-{'type':'edge', 'id':'SearchVulnerableFileNamesScreen_to_Screen', 'source':'SearchVulnerableFileNamesScreen', 'target':'Screen', 'uml_edge_type': 'generalisation'}
-{'type':'edge', 'id':'Hades_to_App', 'source':'Hades', 'target':'App', 'uml_edge_type': 'generalisation'}
-{'type':'edge', 'id':'Infector_to_SearchVulnerableFileNamesScreen', 'source':'Infector', 'target':'SearchVulnerableFileNamesScreen', 'uml_edge_type': 'composition'}
-{'type':'edge', 'id':'platform.version_to_UserInfo', 'source':'platform.version', 'target':'UserInfo', 'uml_edge_type': 'composition'}
-{'type':'edge', 'id':'platform.system_to_UserInfo', 'source':'platform.system', 'target':'UserInfo', 'uml_edge_type': 'composition'}
+{'type':'umlshape', 'id':'HadesFunctions', 'x':223, 'y':441, 'width':154, 'height':266, 'attrs': 'filehelper|scanner|score|user', 'meths': '__init__|displayTip|getScanInfo|getScoreColourFile|getScoreColourInfo|getTableData|scan|updateLastScan|updateScanCount'}
+{'type':'umlshape', 'id':'Scanner', 'x':6, 'y':11, 'width':234, 'height':266, 'attrs': 'PythonFilesAccessed|VulnerableFileNameFlags|VulnerableTextInFileFlags|fileHelper', 'meths': '__init__|findVulnerableFileNames|findVulnerablitiesInTxt|getPythonFilesAccessed|getVulnerableFileNameFlags|infectPyFiles|resetVulnerableFileNameFlags|setPythonFilesAccessed|setVulnerableFileNameFlags'}
+{'type':'umlshape', 'id':'FileHelper', 'x':249, 'y':14, 'width':202, 'height':218, 'attrs': 'fileExtensions|files', 'meths': '__init__|findAllFiles|findFilesInDir|getFileExtensions|getFilesList|getTotalNumberOfFiles|getTotalNumberOfFilesExt|setFileExtensions'}
+{'type':'umlshape', 'id':'Score', 'x':462, 'y':14, 'width':266, 'height':298, 'attrs': 'colour|filehelper|metricScores|scanner|totalvulnerabilities', 'meths': '__init__|calculateColour|calculateMetricScores|getGetCommonVulnerabilityMetrics|getGetVulnerabilitySummary|getMetricColour|getMetricScore|getMetricValue|getTotalvulnerabilities|setTotalvulnerabilities'}
+{'type':'umlshape', 'id':'UserInfo', 'x':786, 'y':257, 'width':122, 'height':234, 'attrs': 'cvehelper|data|fileHelper', 'meths': '__init__|updateAllInfo|updateCounts|updateOs|updateScanInfo|updateUserId|updateipv4|writeToJson'}
+{'type':'umlshape', 'id':'CVEHelper', 'x':777, 'y':49, 'width':266, 'height':154, 'attrs': 'versions', 'meths': '__init__|getGetCommonVulnerabilityMetrics|getGetVulnerabilitySummary|getWinver|getWinverFromJson'}
+{'type':'umlshape', 'id':'DatabaseManager', 'x':1060, 'y':31, 'width':162, 'height':144, 'attrs': '', 'meths': 'insertIntoUser|insertIntoUserFiles|updateIntoUser|updateIntoUserFiles|updateUser|updateUserFiles'}
+{'type':'umlshape', 'id':'MainWindow', 'x':793, 'y':534, 'width':130, 'height':186, 'attrs': 'dragPos|ui', 'meths': 'Button|__init__|eventFilter|mousePressEvent|moveWindow|resizeEvent'}
+{'type':'umlshape', 'id':'Ui_MainWindow', 'x':549, 'y':532, 'width':226, 'height':1658, 'attrs': 'Access|AccessHelp|AccessImage|Authentication|AuthenticationHelp|AuthenticationImage|Availability|AvailabilityHelp|AvailabilityImage|Complexity|ComplexityHelp|ComplexityImage|Confidentiality|ConfidentialityHelp|ConfidentialityImage|HadesFunctions|Integrity|IntegrityHelp|IntegrityImage|btn_close|btn_maximize_restore|btn_minimize|btn_scan|btn_toggle_menu|btn_viewscore|btn_viewvulnerablefilenames|centralwidget|frame_3|frame_btns_right|frame_center|frame_content|frame_content_right|frame_extra_menus|frame_grip|frame_icon_top_bar|frame_label_bottom|frame_label_top_btns|frame_left_menu|frame_main|frame_menus|frame_size_grip|frame_toggle|frame_top|frame_top_btns|frame_top_info|frame_top_right|gridLayout|gridLayoutHelp|gridLayoutHelpWidgetHelp|gridLayoutWidget|horizontalLayout|horizontalLayout_10|horizontalLayout_11|horizontalLayout_12|horizontalLayout_14|horizontalLayout_2|horizontalLayout_3|horizontalLayout_4|horizontalLayout_5|horizontalLayout_6|horizontalLayout_7|horizontalLayout_8|horizontalLayout_9|label|label_2|label_3|label_credits|label_title_bar_top|label_top_info_1|label_top_info_2|label_user_icon|label_version|layout_menu_bottom|layout_menus|page_help|page_home|page_scan|page_score|stackedWidget|tableWidget|total_files|total_vulnerablities|verticalLayout|verticalLayout_10|verticalLayout_18|verticalLayout_2|verticalLayout_3|verticalLayout_4|verticalLayout_5|verticalLayout_6|verticalLayout_7|verticalLayout_8|verticalLayout_9|winver', 'meths': 'loadData|retranslateUi|runScan|setupUi|viewScore|viewvulnerablefilenames'}
+{'type':'umlshape', 'id':'UIFunctions', 'x':948, 'y':531, 'width':210, 'height':426, 'attrs': 'GLOBAL_STATE|GLOBAL_TITLE_BAR|animation|shadow|sizegrip|ui', 'meths': 'addNewMenu|deselectMenu|dobleClickMaximizeRestore|enableMaximumSize|labelDescription|labelPage|labelTitle|maximize_restore|removeTitleBar|resetStyle|returStatus|selectMenu|selectStandardMenu|setStatus|toggleMenu|uiDefinitions|userIcon'}
+{'type':'edge', 'id':'Scanner_to_HadesFunctions', 'source':'Scanner', 'target':'HadesFunctions', 'uml_edge_type': 'composition'}
+{'type':'edge', 'id':'FileHelper_to_HadesFunctions', 'source':'FileHelper', 'target':'HadesFunctions', 'uml_edge_type': 'composition'}
+{'type':'edge', 'id':'Score_to_HadesFunctions', 'source':'Score', 'target':'HadesFunctions', 'uml_edge_type': 'composition'}
+{'type':'edge', 'id':'UserInfo_to_HadesFunctions', 'source':'UserInfo', 'target':'HadesFunctions', 'uml_edge_type': 'composition'}
+{'type':'edge', 'id':'Ui_MainWindow_to_MainWindow', 'source':'Ui_MainWindow', 'target':'MainWindow', 'uml_edge_type': 'composition'}
+{'type':'edge', 'id':'Score_to_CVEHelper', 'source':'Score', 'target':'CVEHelper', 'uml_edge_type': 'generalisation'}
+{'type':'edge', 'id':'UIFunctions_to_MainWindow', 'source':'UIFunctions', 'target':'MainWindow', 'uml_edge_type': 'generalisation'}
+{'type':'edge', 'id':'HadesFunctions_to_Ui_MainWindow', 'source':'HadesFunctions', 'target':'Ui_MainWindow', 'uml_edge_type': 'composition'}
+{'type':'edge', 'id':'CVEHelper_to_UserInfo', 'source':'CVEHelper', 'target':'UserInfo', 'uml_edge_type': 'composition'}

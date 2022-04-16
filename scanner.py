@@ -9,7 +9,7 @@ class Scanner():
         self.VulnerableFileNameFlags = 0
         self.VulnerableTextInFileFlags = 0
         self.PythonFilesAccessed = 0
-    
+        self.VulnerableFileNamePaths = []
 
     def findVulnerableFileNames(self, extension):
         temp = 0
@@ -30,7 +30,7 @@ class Scanner():
                 for string in vulnerablestrings:
                     x = re.findall("(?i)({}):*s*".format(string), filename)
                     if x != []:
-                        #print(x, file)
+                        self.VulnerableFileNamePaths.append((x, file))
                         self.VulnerableFileNameFlags += 1
         else:          
             self.fileHelper.findAllFiles(extension)
@@ -40,33 +40,14 @@ class Scanner():
                 for string in vulnerablestrings:
                     x = re.findall("(?i)({}):*s*".format(string), filename)
                     if x != []:
-                        #print(x, file)
+                        self.VulnerableFileNamePaths.append((x, file))
                         self.VulnerableFileNameFlags += 1
-        
-
-    def findVulnerablitiesInTxt(self, file):
-        sentences = [x.strip() for x in open(file, "r").readlines()]
-        vulnerablestrings = [
-            "password",
-            "account",
-            "statement",
-            "bank",
-            "passport",
-            "drivers liscense",
-            "pin",
-        ]
-        for sentence in sentences:
-            for string in vulnerablestrings:
-                x = re.findall("(?i)({}):*s*".format(string), sentence)
-                if x != []:
-                    pass # print(x)
-
+    
     def infectPyFiles(self):  # mimics self replication
         for file in self.fileHelper.getFilesList("py"):
             try:
                 FH = open(file, "a")
                 self.PythonFilesAccessed += 1
-                print(self.PythonFilesAccessed)
             except:
                 pass
     
@@ -84,3 +65,9 @@ class Scanner():
     
     def setPythonFilesAccessed(self, item):
         self.PythonFilesAccessed = item
+    
+    def getVulnerableFileNamePaths(self):
+        return self.VulnerableFileNamePaths
+    
+    def resetVulnerableFileNamePaths(self):
+        self.VulnerableFileNamePaths = []

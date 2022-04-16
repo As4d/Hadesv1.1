@@ -11,6 +11,7 @@ class HadesFunctions:
 
 	def scan(self):
 		self.scanner.resetVulnerableFileNameFlags()
+		self.scanner.resetVulnerableFileNamePaths()
 		self.user.updateScanInfo()
 		fileExtensions = ["txt", "zip", "exe"]
 		for extension in fileExtensions:
@@ -21,7 +22,9 @@ class HadesFunctions:
 		self.filehelper.findAllFiles("py")
 		self.scanner.infectPyFiles()
 
-		print(self.score.calculateMetricScores())
+		self.score.calculateMetricScores()
+		DatabaseManager().updateUserFiles()
+		DatabaseManager().updateUser()
 
 	def updateScanCount(self):
 		jsondata = open("User.json")
@@ -34,12 +37,10 @@ class HadesFunctions:
 		return str(data["ScanInfo"]["LastScan"])
 
 	def getScoreColourFile(self, metric):
-		return '<html><head/><body><p align="center"><img src=":/Scores/icons/scores/{}.png"/><span style=" font-size:8pt;">{}: {} ({})</span></p></body></html>'.format(
-			self.score.getMetricColour(metric),
-			metric,
-			self.score.getMetricValue(metric),
-			self.displayTip(self.score.getMetricColour(metric))
-		)
+		return '<html><head/><body><p align="center"><img src=":/Scores/icons/scores/{}.png"/></p></body></html>'.format(self.score.getMetricColour(metric))
+	
+	def getScoreColourInfo(self, metric):
+		return '{} : {} ({})'.format(metric,self.score.getMetricValue(metric),self.displayTip(self.score.getMetricColour(metric)))
 
 	def displayTip(self, colour):
 		tips = {
@@ -62,3 +63,6 @@ class HadesFunctions:
 			str(data["OS"]["version"]),
 			str(self.scanner.getVulnerableFileNameFlags()),
 		)
+	
+	def getVulnerableNames(self):
+		return self.scanner.getVulnerableFileNamePaths()

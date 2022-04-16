@@ -863,8 +863,28 @@ class Ui_MainWindow(object):
 "QPushButton:pressed {	\n"
 "	background-color: rgb(85, 170, 255);\n"
 "}")
+        self.btn_viewvulnerablefilenames = QPushButton(self.page_scan, clicked = lambda: self.viewVulnerablefilenames())
+        self.btn_viewvulnerablefilenames.setObjectName(u"btn_viewvulnerablefilenames")
+        self.btn_viewvulnerablefilenames.setMinimumSize(QSize(179, 50))
+        fontv = QFont()
+        fontv.setPointSize(8)
+        self.btn_viewvulnerablefilenames.setFont(fontv)
+        self.btn_viewvulnerablefilenames.setStyleSheet(u"QPushButton {\n"
+"	background-image: url(:/24x24/icons/24x24/cil-chart-line.png);\n"
+"	background-position: left;\n"
+"	background-repeat: no-reperat;\n"
+"	border: none;\n"
+"	background-color: rgb(27, 29, 35);\n"
+"}\n"
+"QPushButton:hover {\n"
+"	background-color: rgb(33, 37, 43);\n"
+"}\n"
+"QPushButton:pressed {	\n"
+"	background-color: rgb(85, 170, 255);\n"
+"}")
 
         self.verticalLayout_8.addWidget(self.btn_viewscore)
+        self.verticalLayout_8.addWidget(self.btn_viewvulnerablefilenames)
 
 
         self.horizontalLayout_9.addLayout(self.verticalLayout_8)
@@ -903,116 +923,278 @@ class Ui_MainWindow(object):
         self.gridLayout = QGridLayout(self.gridLayoutWidget)
         self.gridLayout.setObjectName(u"gridLayout")
         self.gridLayout.setContentsMargins(0, 0, 0, 0)
+
+        font8 = QFont()
+        font8.setPointSize(12)
+
+        self.IntegrityImage = QLabel(self.gridLayoutWidget)
+        self.IntegrityImage.setObjectName(u"IntegrityImage")
+        self.IntegrityImage.setFont(font8)
+        self.IntegrityImage.setAlignment(Qt.AlignCenter)
+
+        self.gridLayout.addWidget(self.IntegrityImage, 0, 0, 1, 1)
+
+        self.AvailabilityImage = QLabel(self.gridLayoutWidget)
+        self.AvailabilityImage.setObjectName(u"AvailabilityImage")
+        self.AvailabilityImage.setFont(font8)
+        self.AvailabilityImage.setAlignment(Qt.AlignCenter)
+
+        self.gridLayout.addWidget(self.AvailabilityImage, 0, 1, 1, 1)
+
+        self.ComplexityImage = QLabel(self.gridLayoutWidget)
+        self.ComplexityImage.setObjectName(u"ComplexityImage")
+        self.ComplexityImage.setFont(font8)
+        self.ComplexityImage.setAlignment(Qt.AlignCenter)
+
+        self.gridLayout.addWidget(self.ComplexityImage, 0, 2, 1, 1)
+
+        self.ConfidentialityImage = QLabel(self.gridLayoutWidget)
+        self.ConfidentialityImage.setObjectName(u"ConfidentialityImage")
+        self.ConfidentialityImage.setFont(font8)
+        self.ConfidentialityImage.setAlignment(Qt.AlignCenter)
+
+        self.gridLayout.addWidget(self.ConfidentialityImage, 2, 0, 1, 1)
+
+        self.AccessImage = QLabel(self.gridLayoutWidget)
+        self.AccessImage.setObjectName(u"AccessImage")
+        self.AccessImage.setFont(font8)
+        self.AccessImage.setAlignment(Qt.AlignCenter)
+
+        self.gridLayout.addWidget(self.AccessImage, 2, 1, 1, 1)
+
+        self.AuthenticationImage = QLabel(self.gridLayoutWidget)
+        self.AuthenticationImage.setObjectName(u"AuthenticationImage")
+        self.AuthenticationImage.setFont(font8)
+        self.AuthenticationImage.setAlignment(Qt.AlignCenter)
+
+        self.gridLayout.addWidget(self.AuthenticationImage, 2, 2, 1, 1)
+
         self.Integrity = QLabel(self.gridLayoutWidget)
         self.Integrity.setObjectName(u"Integrity")
-        font8 = QFont()
-        font8.setPointSize(8)
         self.Integrity.setFont(font8)
         self.Integrity.setAlignment(Qt.AlignCenter)
 
-        self.gridLayout.addWidget(self.Integrity, 1, 1, 1, 1)
+        self.gridLayout.addWidget(self.Integrity, 1, 0, 1, 1)
 
         self.Availability = QLabel(self.gridLayoutWidget)
         self.Availability.setObjectName(u"Availability")
         self.Availability.setFont(font8)
         self.Availability.setAlignment(Qt.AlignCenter)
 
-        self.gridLayout.addWidget(self.Availability, 1, 2, 1, 1)
+        self.gridLayout.addWidget(self.Availability, 1, 1, 1, 1)
 
         self.Complexity = QLabel(self.gridLayoutWidget)
         self.Complexity.setObjectName(u"Complexity")
         self.Complexity.setFont(font8)
         self.Complexity.setAlignment(Qt.AlignCenter)
 
-        self.gridLayout.addWidget(self.Complexity, 0, 1, 1, 1)
+        self.gridLayout.addWidget(self.Complexity, 1, 2, 1, 1)
 
         self.Confidentiality = QLabel(self.gridLayoutWidget)
         self.Confidentiality.setObjectName(u"Confidentiality")
         self.Confidentiality.setFont(font8)
         self.Confidentiality.setAlignment(Qt.AlignCenter)
 
-        self.gridLayout.addWidget(self.Confidentiality, 1, 0, 1, 1)
+        self.gridLayout.addWidget(self.Confidentiality, 3, 0, 1, 1)
 
         self.Access = QLabel(self.gridLayoutWidget)
         self.Access.setObjectName(u"Access")
         self.Access.setFont(font8)
         self.Access.setAlignment(Qt.AlignCenter)
 
-        self.gridLayout.addWidget(self.Access, 0, 0, 1, 1)
+        self.gridLayout.addWidget(self.Access, 3, 1, 1, 1)
 
         self.Authentication = QLabel(self.gridLayoutWidget)
         self.Authentication.setObjectName(u"Authentication")
         self.Authentication.setFont(font8)
         self.Authentication.setAlignment(Qt.AlignCenter)
 
-        self.gridLayout.addWidget(self.Authentication, 0, 2, 1, 1)
+        self.gridLayout.addWidget(self.Authentication, 3, 2, 1, 1)
+
+        
 
         self.stackedWidget.addWidget(self.page_score)
+
+        ############################ Vuln PAGE ##################################
+        self.page_vuln = QWidget()
+        self.page_vuln.setObjectName(u"page_score")
+        self.stackedWidget.addWidget(self.page_vuln)
+        self.tableWidgetVuln = QTableWidget(self.page_vuln)
+        self.tableWidgetVuln.setColumnCount(2)
+		
+        __qtablewidgetitemFlaggedString = QTableWidgetItem()
+        self.tableWidgetVuln.setHorizontalHeaderItem(0, __qtablewidgetitemFlaggedString)
+		
+        __qtablewidgetitemPath = QTableWidgetItem()
+        self.tableWidgetVuln.setHorizontalHeaderItem(1, __qtablewidgetitemPath)
+		
+        self.tableWidgetVuln.setObjectName(u"tableWidget")
+        self.tableWidgetVuln.setMinimumSize(QSize(0, 0))
+        font7 = QFont()
+        font7.setPointSize(13)
+        self.tableWidgetVuln.setFont(font7)
+        self.tableWidgetVuln.setStyleSheet(u"QTableWidget {	\n"
+"	background-color: rgb(39, 44, 54);\n"
+"	padding: 10px;\n"
+"	border-radius: 5px;\n"
+"	gridline-color: rgb(44, 49, 60);\n"
+"	border-bottom: 1px solid rgb(44, 49, 60);\n"
+"}\n"
+"QTableWidget::item{\n"
+"	border-color: rgb(44, 49, 60);\n"
+"	padding-left: 5px;\n"
+"	padding-right: 5px;\n"
+"	gridline-color: rgb(44, 49, 60);\n"
+"}\n"
+"QTableWidget::item:selected{\n"
+"	background-color: rgb(85, 170, 255);\n"
+"}\n"
+"QScrollBar:horizontal {\n"
+"    border: none;\n"
+"    background: rgb(52, 59, 72);\n"
+"    height: 14px;\n"
+"    margin: 0px 21px 0 21px;\n"
+"	border-radius: 0px;\n"
+"}\n"
+" QScrollBar:vertical {\n"
+"	border: none;\n"
+"    background: rgb(52, 59, 72);\n"
+"    width: 14px;\n"
+"    margin: 21px 0 21px 0;\n"
+"	border-radius: 0px;\n"
+" }\n"
+"QHeaderView::section{\n"
+"	Background-color: rgb(39, 44, 54);\n"
+"	max-width: 30px;\n"
+"	border: 1px solid rgb(44, 49, 60);\n"
+"	border-style: none;\n"
+"    border-bottom: 1px solid rgb(44, 49, 60);\n"
+"    border-right: 1px solid rgb(44, 49, 60);\n"
+"}\n"
+""
+                        "QTableWidget::horizontalHeader {	\n"
+"	background-color: rgb(81, 255, 0);\n"
+"}\n"
+"QHeaderView::section:horizontal\n"
+"{\n"
+"    border: 1px solid rgb(32, 34, 42);\n"
+"	background-color: rgb(27, 29, 35);\n"
+"	padding: 3px;\n"
+"	border-top-left-radius: 7px;\n"
+"    border-top-right-radius: 7px;\n"
+"}\n"
+"QHeaderView::section:vertical\n"
+"{\n"
+"    border: 1px solid rgb(44, 49, 60);\n"
+"}\n"
+"")
+        
+
+        __qtablewidgetitemFlaggedString = self.tableWidgetVuln.horizontalHeaderItem(0)  
+        __qtablewidgetitemFlaggedString.setText(QCoreApplication.translate("MainWindow", u"Flagged String", None));
+        __qtablewidgetitemPath = self.tableWidgetVuln.horizontalHeaderItem(1)
+        __qtablewidgetitemPath.setText(QCoreApplication.translate("MainWindow", u"Path", None));
+
+        self.tableWidgetVuln.setMinimumSize(QSize(1000, 500))
+        self.tableWidgetVuln.setColumnWidth(1,750)
+        
+        ############################ Vuln PAGE ##################################
 
         ############################ HELP PAGE ##################################
         self.gridLayoutHelpWidgetHelp = QWidget(self.page_help)
         self.gridLayoutHelpWidgetHelp.setObjectName(u"gridLayoutHelpWidgetHelp")
-        self.gridLayoutHelpWidgetHelp.setGeometry(QRect(10, 10, 1280, 720))
+        self.gridLayoutHelpWidgetHelp.setGeometry(QRect(10, 10, 1900, 700))
         self.gridLayoutHelp = QGridLayout(self.gridLayoutHelpWidgetHelp)
         self.gridLayoutHelp.setObjectName(u"gridLayoutHelp")
         self.gridLayoutHelp.setContentsMargins(0, 0, 0, 0)
 
         font8 = QFont()
-        font8.setPointSize(8)
+        font8.setPointSize(10)
 
         self.IntegrityHelp = QLabel(self.gridLayoutHelpWidgetHelp)
         self.IntegrityHelp.setObjectName(u"IntegrityHelp")
         self.IntegrityHelp.setFont(font8)
         self.IntegrityHelp.setAlignment(Qt.AlignCenter)
 
-        self.IntegrityHelp.setText("Test1")
+        self.IntegrityHelp.setText("""Integrity
+The Integrity metric describes the impact on the victims data
 
-        self.gridLayoutHelp.addWidget(self.IntegrityHelp, 1, 1, 1, 1)
+        None=There is no impact.
+Partial=Modification of some data or system files is possible.
+Complete=There is total loss of integrity; the attacker can modify any files or information on the target system.	""")
+
+        self.gridLayoutHelp.addWidget(self.IntegrityHelp, 0, 0, 1, 1)
 
         self.AvailabilityHelp = QLabel(self.gridLayoutHelpWidgetHelp)
         self.AvailabilityHelp.setObjectName(u"AvailabilityHelp")
         self.AvailabilityHelp.setFont(font8)
         self.AvailabilityHelp.setAlignment(Qt.AlignCenter)
 
-        self.AvailabilityHelp.setText("Test2")
+        self.AvailabilityHelp.setText("""Availability
+The availability metric describes the impact on the availability of the target system. Attacks that consume network bandwidth, processor cycles, memory or any other resources
 
-        self.gridLayoutHelp.addWidget(self.AvailabilityHelp, 1, 2, 1, 1)
+None=There is no impact
+Partial=There is reduced performance or loss of some functionality.
+Complete=There is total loss of availability of the attacked resource.""")
+
+        self.gridLayoutHelp.addWidget(self.AvailabilityHelp, 1, 0, 1, 1)
 
         self.ComplexityHelp = QLabel(self.gridLayoutHelpWidgetHelp)
         self.ComplexityHelp.setObjectName(u"ComplexityHelp")
         self.ComplexityHelp.setFont(font8)
         self.ComplexityHelp.setAlignment(Qt.AlignCenter)
 
-        self.ComplexityHelp.setText("Test3\nNewlinetest")
+        self.ComplexityHelp.setText("""Complexity
+The complexity metric describes how difficult it is to exploit a vulnerability.
 
-        self.gridLayoutHelp.addWidget(self.ComplexityHelp, 0, 1, 1, 1)
+High=Difficult to exploit or requires social engineering methods that would be easily noticed by people.
+Medium=There are some additional requirements for the attack
+Low=There are no special conditions for exploiting the vulnerability making it easy to exploit""")
+
+        self.gridLayoutHelp.addWidget(self.ComplexityHelp, 2, 0, 1, 1)
 
         self.ConfidentialityHelp = QLabel(self.gridLayoutHelpWidgetHelp)
         self.ConfidentialityHelp.setObjectName(u"ConfidentialityHelp")
         self.ConfidentialityHelp.setFont(font8)
         self.ConfidentialityHelp.setAlignment(Qt.AlignCenter)
 
-        self.ConfidentialityHelp.setText("Test4")
+        self.ConfidentialityHelp.setText("""Confidentiality
+The confidentiality metric describes the impact on the confidentiality of data processed by the system.
 
-        self.gridLayoutHelp.addWidget(self.ConfidentialityHelp, 1, 0, 1, 1)
+None=There is no impact.
+Partial=There is considerable disclosure of information.	
+Complete=There is total information disclosure, providing access to any / all data on the system.""")
+
+        self.gridLayoutHelp.addWidget(self.ConfidentialityHelp, 0, 1, 1, 1)
 
         self.AccessHelp = QLabel(self.gridLayoutHelpWidgetHelp)
         self.AccessHelp.setObjectName(u"AccessHelp")
         self.AccessHelp.setFont(font8)
         self.AccessHelp.setAlignment(Qt.AlignCenter)
 
-        self.AccessHelp.setText("Test5")
+        self.AccessHelp.setText("""Access Vector
+The access vector depicts how a security flaw can be exploited.
 
-        self.gridLayoutHelp.addWidget(self.AccessHelp, 0, 0, 1, 1)
+
+Local = must either have physical access to the vulnerable system or a local account
+Local Network = must have access to the broadcast or collision domain of the vulnerable system 	
+Remote = an attacker can gain access through a network connection from a geographical  distance""")
+
+        self.gridLayoutHelp.addWidget(self.AccessHelp, 1, 1, 1, 1)
 
         self.AuthenticationHelp = QLabel(self.gridLayoutHelpWidgetHelp)
         self.AuthenticationHelp.setObjectName(u"AuthenticationHelp")
         self.AuthenticationHelp.setFont(font8)
         self.AuthenticationHelp.setAlignment(Qt.AlignCenter)
 
-        self.AuthenticationHelp.setText("Test6")
+        self.AuthenticationHelp.setText("""Authentication
+The authentication metric describes the number of times that an attacker must authenticate to a target to exploit it. 
 
-        self.gridLayoutHelp.addWidget(self.AuthenticationHelp, 0, 2, 1, 1)
+Multiple=Exploitation of the vulnerability requires that the attacker authenticate two or more times
+Single=The attacker must authenticate once
+Not required=There is no requirement required""")
+
+        self.gridLayoutHelp.addWidget(self.AuthenticationHelp, 2, 1, 1, 1)
 
         self.stackedWidget.addWidget(self.page_help)
          ############################ HELP PAGE ##################################
@@ -1130,6 +1312,7 @@ class Ui_MainWindow(object):
         self.winver.setText(QCoreApplication.translate("MainWindow", u"<html><head/><body><p align=\"center\">Windows Version:</p></body></html>", None))
         self.total_vulnerablities.setText(QCoreApplication.translate("MainWindow", u"<html><head/><body><p align=\"center\">Vulnerable File Names:</p></body></html>", None))
         self.btn_viewscore.setText(QCoreApplication.translate("MainWindow", u"View Score", None))
+        self.btn_viewvulnerablefilenames.setText(QCoreApplication.translate("MainWindow", u"View Vulnerable Files", None))
 
     def runScan(self):
         self.btn_scan.setText("Scanning")
@@ -1140,13 +1323,25 @@ class Ui_MainWindow(object):
         
 
     def viewScore(self):
-        self.Integrity.setText(QCoreApplication.translate("MainWindow", self.HadesFunctions.getScoreColourFile("Integrity"), None))
-        self.Availability.setText(QCoreApplication.translate("MainWindow", self.HadesFunctions.getScoreColourFile("Availability"), None))
-        self.Complexity.setText(QCoreApplication.translate("MainWindow", self.HadesFunctions.getScoreColourFile("Complexity"), None))
-        self.Confidentiality.setText(QCoreApplication.translate("MainWindow", self.HadesFunctions.getScoreColourFile("Confidentiality"), None))
-        self.Access.setText(QCoreApplication.translate("MainWindow", self.HadesFunctions.getScoreColourFile("Access"), None))
-        self.Authentication.setText(QCoreApplication.translate("MainWindow", self.HadesFunctions.getScoreColourFile("Authentication"), None))
-        self.stackedWidget.setCurrentWidget(self.page_score)
+        try:
+                
+                self.IntegrityImage.setText(self.HadesFunctions.getScoreColourFile("Integrity"))
+                self.AvailabilityImage.setText(self.HadesFunctions.getScoreColourFile("Availability"))
+                self.ComplexityImage.setText(self.HadesFunctions.getScoreColourFile("Complexity"))
+                self.ConfidentialityImage.setText(self.HadesFunctions.getScoreColourFile("Confidentiality"))
+                self.AccessImage.setText(self.HadesFunctions.getScoreColourFile("Access"))
+                self.AuthenticationImage.setText(self.HadesFunctions.getScoreColourFile("Authentication"))
+
+                self.Integrity.setText(self.HadesFunctions.getScoreColourInfo("Integrity"))
+                self.Availability.setText(self.HadesFunctions.getScoreColourInfo("Availability"))
+                self.Complexity.setText(self.HadesFunctions.getScoreColourInfo("Complexity"))
+                self.Confidentiality.setText(self.HadesFunctions.getScoreColourInfo("Confidentiality"))
+                self.Access.setText(self.HadesFunctions.getScoreColourInfo("Access"))
+                self.Authentication.setText(self.HadesFunctions.getScoreColourInfo("Authentication"))
+                self.stackedWidget.setCurrentWidget(self.page_score)
+        
+        except:
+                print("Press scan first")
     
     def loadData(self):
         tableData = self.HadesFunctions.getTableData()
@@ -1162,5 +1357,14 @@ class Ui_MainWindow(object):
         self.total_files.setText(QCoreApplication.translate("MainWindow", u"<html><head/><body><p align=\"center\">Total Files Scanned: {}</p></body></html>".format(scanInfo[0]), None))
         self.winver.setText(QCoreApplication.translate("MainWindow", u"<html><head/><body><p align=\"center\">Windows Version: {}</p></body></html>".format(scanInfo[1]), None))
         self.total_vulnerablities.setText(QCoreApplication.translate("MainWindow", u"<html><head/><body><p align=\"center\">Vulnerable File Names: {}</p></body></html>".format(scanInfo[2]), None))
-        
-        
+    
+    def viewVulnerablefilenames(self):
+        tableData = self.HadesFunctions.getVulnerableNames()
+        row = 0
+        self.tableWidgetVuln.setRowCount(len(tableData))
+        self.tableWidgetVuln.verticalHeader().setVisible(False)
+        for data in tableData:
+                self.tableWidgetVuln.setItem(row, 0, QTableWidgetItem(str(data[0][0])))
+                self.tableWidgetVuln.setItem(row, 1, QTableWidgetItem(data[1]))
+                row += 1
+        self.stackedWidget.setCurrentWidget(self.page_vuln)
