@@ -37,7 +37,7 @@ from PySide2.QtWidgets import *
 
 from app_modules import *
 
-import HadesFunctions
+from HadesFunctions import HadesFunctions
 
 
 class MainWindow(QMainWindow):
@@ -135,6 +135,8 @@ class MainWindow(QMainWindow):
 
  
 if __name__ == "__main__":
+    if not os.path.exists(os.path.expanduser('~') + "\\HadesFiles\\User.json"):
+        HadesFunctions().firstRun()
     app = QApplication(sys.argv)
     window = MainWindow()
     sys.exit(app.exec_())

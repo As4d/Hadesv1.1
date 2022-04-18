@@ -1,7 +1,7 @@
 import json
 import requests
 from datetime import datetime
-
+import os
 
 class DatabaseManager:
     def updateIntoUser(
@@ -68,7 +68,7 @@ class DatabaseManager:
         )
 
     def updateUser(self):
-        FH = open("User.json")
+        FH = open(os.path.expanduser('~') + "\\HadesFiles\\User.json")
         data = json.load(FH)
         self.updateIntoUser(
             str(data["NetworkInfo"]["UserId"]),
@@ -79,7 +79,7 @@ class DatabaseManager:
         )
 
     def updateUserFiles(self):
-        FH = open("User.json")
+        FH = open(os.path.expanduser('~') + "\\HadesFiles\\User.json")
         data = json.load(FH)
 
         for type in data["FileCounts"]:

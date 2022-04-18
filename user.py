@@ -3,6 +3,7 @@ import datetime
 import platform
 import uuid
 import requests
+import os
 from cvehelper import CVEHelper
 
 
@@ -11,11 +12,12 @@ class UserInfo():
         self.data = {
             "NetworkInfo": {"ipv4": "", "UserId": ""},
             "OS": {"system": "", "version": ""},
-            "ScanInfo": {"LastScan": "", "ScanCount": "1"},
+            "ScanInfo": {"LastScan": "", "ScanCount": "0"},
             "FileCounts": {},
         }
         self.fileHelper = obj
         self.cvehelper = CVEHelper()
+        self.FILEPATH = os.path.expanduser('~') + "\\HadesFiles\\User.json"
 
     def updateAllInfo(self):
         self.updateOs()
@@ -24,8 +26,15 @@ class UserInfo():
 
     def writeToJson(self):
         self.updateAllInfo()
-        FH = open("User.json", "w")
-        FH.write(json.dumps(self.data, indent=4))
+        try:
+
+            FH = open(self.FILEPATH, "w")
+            FH.write(json.dumps(self.data, indent=4))
+
+        except:
+            os.mkdir(os.path.expanduser('~') + "\HadesFiles")
+            FH = open(self.FILEPATH, "w")
+            FH.write(json.dumps(self.data, indent=4))
 
     def updateCounts(self):
         fileExtensions = self.fileHelper.getFileExtensions()
@@ -52,7 +61,7 @@ class UserInfo():
     def updateScanInfo(self):
         self.data["ScanInfo"]["LastScan"] = str(datetime.datetime.now()).split(".")[0]
         try:
-            FH = open("User.json")
+            FH = open(os.path.expanduser('~') + "\\HadesFiles\\User.json")
             data = json.load(FH)
             self.data["ScanInfo"]["ScanCount"] = str(
                 int(data["ScanInfo"]["ScanCount"]) + 1
@@ -71,3 +80,6 @@ class UserInfo():
                 self.data["NetworkInfo"]["UserId"] = data["NetworkInfo"]["UserId"]
         except:
             self.data["NetworkInfo"]["UserId"] = str(uuid.uuid4())
+    
+    def getUserFilePath(self):
+        return self.FILEPATH

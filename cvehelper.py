@@ -1,5 +1,6 @@
 import json
 import requests
+import os
 
 class CVEHelper:
 	def __init__(self):
@@ -23,7 +24,7 @@ class CVEHelper:
 		return self.versions[buildNumber]
 
 	def getWinverFromJson(self):
-		FH = open("User.json")
+		FH = open(os.path.expanduser('~') + "\\HadesFiles\\User.json")
 		data = json.load(FH)
 		return data["OS"]["version"]
 

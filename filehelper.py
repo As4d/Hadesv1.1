@@ -15,7 +15,7 @@ class FileHelper:
 
     def findAllFiles(self, extension):
         filesFound = []
-        for files in os.walk(pathlib.Path.home()):  # pathlib.Path.home() / r"C:\Users\asadk\Documents\TEST"
+        for files in os.walk(r"C:\Users\asadk\Documents\TEST"):  # pathlib.Path.home() / r"C:\Users\asadk\Documents\TEST"
             for file in files[2]:
                 if file.split(".")[-1] == extension.lower():
                     #print("File found: " + files[0] + "\\" + file + "\n")

@@ -8,6 +8,10 @@ class HadesFunctions:
 		self.scanner = Scanner(self.filehelper)
 		self.user = UserInfo(self.filehelper)
 		self.score = Score(self.scanner, self.filehelper)
+		self.FILEPATH = self.user.getUserFilePath()
+	
+	def firstRun(self):
+		self.user.writeToJson()
 
 	def scan(self):
 		self.scanner.resetVulnerableFileNameFlags()
@@ -27,12 +31,12 @@ class HadesFunctions:
 		DatabaseManager().updateUser()
 
 	def updateScanCount(self):
-		jsondata = open("User.json")
+		jsondata = open(self.FILEPATH)
 		data = json.load(jsondata)
 		return str(data["ScanInfo"]["ScanCount"])
 
 	def updateLastScan(self):
-		jsondata = open("User.json")
+		jsondata = open(self.FILEPATH)
 		data = json.load(jsondata)
 		return str(data["ScanInfo"]["LastScan"])
 
@@ -56,7 +60,7 @@ class HadesFunctions:
 		return self.score.getGetVulnerabilitySummary()
 
 	def getScanInfo(self):
-		jsondata = open("User.json")
+		jsondata = open(self.FILEPATH)
 		data = json.load(jsondata)
 		return (
 			str(data["FileCounts"]["total"]),
