@@ -13,15 +13,15 @@ class UIFunctions(MainWindow):
     GLOBAL_STATE = 0
     GLOBAL_TITLE_BAR = True
 
-    def maximize_restore(self):
+    def maximize(self):
         global GLOBAL_STATE
         status = GLOBAL_STATE
         if status == 0:
             self.showMaximized()
             GLOBAL_STATE = 1
             self.ui.horizontalLayout.setContentsMargins(0, 0, 0, 0)
-            self.ui.btn_maximize_restore.setToolTip("Restore")
-            self.ui.btn_maximize_restore.setIcon(
+            self.ui.btn_maximize.setToolTip("Restore")
+            self.ui.btn_maximize.setIcon(
                 QtGui.QIcon(u":/16x16/icons/16x16/cil-window-restore.png")
             )
             self.ui.frame_top_btns.setStyleSheet("background-color: rgb(27, 29, 35)")
@@ -31,8 +31,8 @@ class UIFunctions(MainWindow):
             self.showNormal()
             self.resize(self.width() + 1, self.height() + 1)
             self.ui.horizontalLayout.setContentsMargins(10, 10, 10, 10)
-            self.ui.btn_maximize_restore.setToolTip("Maximize")
-            self.ui.btn_maximize_restore.setIcon(
+            self.ui.btn_maximize.setToolTip("Maximize")
+            self.ui.btn_maximize.setIcon(
                 QtGui.QIcon(u":/16x16/icons/16x16/cil-window-maximize.png")
             )
             self.ui.frame_top_btns.setStyleSheet(
@@ -40,18 +40,12 @@ class UIFunctions(MainWindow):
             )
             self.ui.frame_size_grip.show()
 
-    def returStatus():
+    def getStatus():
         return GLOBAL_STATE
 
     def setStatus(status):
         global GLOBAL_STATE
         GLOBAL_STATE = status
-
-    def enableMaximumSize(self, width, height):
-        if width != "" and height != "":
-            self.setMaximumSize(QSize(width, height))
-            self.ui.frame_size_grip.hide()
-            self.ui.btn_maximize_restore.hide()
 
     def toggleMenu(self, maxWidth, enable):
         if enable:
@@ -74,7 +68,7 @@ class UIFunctions(MainWindow):
             self.animation.setEasingCurve(QtCore.QEasingCurve.InOutQuart)
             self.animation.start()
 
-    def removeTitleBar(status):
+    def setTitleBar(status):
         global GLOBAL_TITLE_BAR
         GLOBAL_TITLE_BAR = status
 
@@ -150,7 +144,7 @@ class UIFunctions(MainWindow):
 
             if event.type() == QtCore.QEvent.MouseButtonDblClick:
                 QtCore.QTimer.singleShot(
-                    250, lambda: UIFunctions.maximize_restore(self)
+                    250, lambda: UIFunctions.maximize(self)
                 )
 
         if GLOBAL_TITLE_BAR:
@@ -181,8 +175,8 @@ class UIFunctions(MainWindow):
 
         self.ui.btn_minimize.clicked.connect(lambda: self.showMinimized())
 
-        self.ui.btn_maximize_restore.clicked.connect(
-            lambda: UIFunctions.maximize_restore(self)
+        self.ui.btn_maximize.clicked.connect(
+            lambda: UIFunctions.maximize(self)
         )
 
         self.ui.btn_close.clicked.connect(lambda: self.close())
