@@ -11,7 +11,7 @@ class Ui_MainWindow(object):
         if not MainWindow.objectName():
             MainWindow.setObjectName(u"MainWindow")
         MainWindow.resize(1071, 830)
-        MainWindow.setMinimumSize(QSize(1280, 720))
+        MainWindow.setMinimumSize(QSize(1280, 800))
         self.HadesFunctions = HadesFunctions()
         palette = QPalette()
         brush = QBrush(QColor(255, 255, 255, 255))
@@ -498,13 +498,13 @@ class Ui_MainWindow(object):
 
         self.horizontalLayout_5.addWidget(self.btn_minimize)
 
-        self.btn_maximize_restore = QPushButton(self.frame_btns_right)
-        self.btn_maximize_restore.setObjectName(u"btn_maximize_restore")
-        sizePolicy2.setHeightForWidth(self.btn_maximize_restore.sizePolicy().hasHeightForWidth())
-        self.btn_maximize_restore.setSizePolicy(sizePolicy2)
-        self.btn_maximize_restore.setMinimumSize(QSize(40, 0))
-        self.btn_maximize_restore.setMaximumSize(QSize(40, 16777215))
-        self.btn_maximize_restore.setStyleSheet(u"QPushButton {	\n"
+        self.btn_maximize = QPushButton(self.frame_btns_right)
+        self.btn_maximize.setObjectName(u"btn_maximize")
+        sizePolicy2.setHeightForWidth(self.btn_maximize.sizePolicy().hasHeightForWidth())
+        self.btn_maximize.setSizePolicy(sizePolicy2)
+        self.btn_maximize.setMinimumSize(QSize(40, 0))
+        self.btn_maximize.setMaximumSize(QSize(40, 16777215))
+        self.btn_maximize.setStyleSheet(u"QPushButton {	\n"
 "	border: none;\n"
 "	background-color: transparent;\n"
 "}\n"
@@ -516,9 +516,9 @@ class Ui_MainWindow(object):
 "}")
         icon1 = QIcon()
         icon1.addFile(u":/16x16/icons/16x16/cil-window-maximize.png", QSize(), QIcon.Normal, QIcon.Off)
-        self.btn_maximize_restore.setIcon(icon1)
+        self.btn_maximize.setIcon(icon1)
 
-        self.horizontalLayout_5.addWidget(self.btn_maximize_restore)
+        self.horizontalLayout_5.addWidget(self.btn_maximize)
 
         self.btn_close = QPushButton(self.frame_btns_right)
         self.btn_close.setObjectName(u"btn_close")
@@ -911,10 +911,14 @@ class Ui_MainWindow(object):
 
         self.horizontalLayout_12.addLayout(self.verticalLayout_18)
 
+        self.page_help1 = QWidget()
+        self.page_help1.setObjectName(u"page_help")
+        self.verticalLayout_6 = QVBoxLayout(self.page_help1)
 
         self.verticalLayout_6.addWidget(self.frame_3)
 
         self.stackedWidget.addWidget(self.page_help)
+        self.stackedWidget.addWidget(self.page_help1)
         self.page_score = QWidget()
         self.page_score.setObjectName(u"page_score")
         self.gridLayoutWidget = QWidget(self.page_score)
@@ -1103,13 +1107,30 @@ class Ui_MainWindow(object):
         ############################ HELP PAGE ##################################
         self.gridLayoutHelpWidgetHelp = QWidget(self.page_help)
         self.gridLayoutHelpWidgetHelp.setObjectName(u"gridLayoutHelpWidgetHelp")
-        self.gridLayoutHelpWidgetHelp.setGeometry(QRect(10, 10, 1900, 700))
+        self.gridLayoutHelpWidgetHelp.setGeometry(QRect(10, 10, 1200, 700))
         self.gridLayoutHelp = QGridLayout(self.gridLayoutHelpWidgetHelp)
         self.gridLayoutHelp.setObjectName(u"gridLayoutHelp")
         self.gridLayoutHelp.setContentsMargins(0, 0, 0, 0)
+        
+        self.gridLayoutHelpWidgetHelp1 = QWidget(self.page_help1)
+        self.gridLayoutHelpWidgetHelp1.setObjectName(u"gridLayoutHelpWidgetHelp1")
+        self.gridLayoutHelpWidgetHelp1.setGeometry(QRect(10, 10, 1200, 700))
+        self.gridLayoutHelp1 = QGridLayout(self.gridLayoutHelpWidgetHelp1)
+        self.gridLayoutHelp1.setObjectName(u"gridLayoutHelp")
+        self.gridLayoutHelp1.setContentsMargins(0, 0, 0, 0)
 
         font8 = QFont()
         font8.setPointSize(10)
+        
+        self.CVSSHelp = QLabel(self.gridLayoutHelpWidgetHelp)
+        self.CVSSHelp.setObjectName(u"CVSSHelp")
+        self.CVSSHelp.setFont(font8)
+        self.CVSSHelp.setAlignment(Qt.AlignCenter)
+
+        self.CVSSHelp.setText("""CVSS score
+        The Common Vulnerability Scoring System (also known as CVSS Scores) assigns a number value (0-10) to the severity of a security vulnerability.""")
+
+        self.gridLayoutHelp.addWidget(self.CVSSHelp)
 
         self.IntegrityHelp = QLabel(self.gridLayoutHelpWidgetHelp)
         self.IntegrityHelp.setObjectName(u"IntegrityHelp")
@@ -1123,7 +1144,7 @@ The Integrity metric describes the impact on the victims data
 Partial=Modification of some data or system files is possible.
 Complete=There is total loss of integrity; the attacker can modify any files or information on the target system.	""")
 
-        self.gridLayoutHelp.addWidget(self.IntegrityHelp, 0, 0, 1, 1)
+        self.gridLayoutHelp.addWidget(self.IntegrityHelp)
 
         self.AvailabilityHelp = QLabel(self.gridLayoutHelpWidgetHelp)
         self.AvailabilityHelp.setObjectName(u"AvailabilityHelp")
@@ -1137,7 +1158,7 @@ None=There is no impact
 Partial=There is reduced performance or loss of some functionality.
 Complete=There is total loss of availability of the attacked resource.""")
 
-        self.gridLayoutHelp.addWidget(self.AvailabilityHelp, 1, 0, 1, 1)
+        self.gridLayoutHelp.addWidget(self.AvailabilityHelp)
 
         self.ComplexityHelp = QLabel(self.gridLayoutHelpWidgetHelp)
         self.ComplexityHelp.setObjectName(u"ComplexityHelp")
@@ -1151,9 +1172,29 @@ High=Difficult to exploit or requires social engineering methods that would be e
 Medium=There are some additional requirements for the attack
 Low=There are no special conditions for exploiting the vulnerability making it easy to exploit""")
 
-        self.gridLayoutHelp.addWidget(self.ComplexityHelp, 2, 0, 1, 1)
+        self.gridLayoutHelp.addWidget(self.ComplexityHelp)
 
-        self.ConfidentialityHelp = QLabel(self.gridLayoutHelpWidgetHelp)
+        self.btn_nextPageHelp = QPushButton(self.page_help, clicked = lambda: self.stackedWidget.setCurrentWidget(self.page_help1))
+        self.btn_nextPageHelp.setObjectName(u"btn_nextPageHelp")
+        self.btn_nextPageHelp.setMinimumSize(QSize(179, 50))
+        self.btn_nextPageHelp.setFont(font4)
+        self.btn_nextPageHelp.setStyleSheet(u"QPushButton {\n"
+"	background-position: left;\n"
+"	background-repeat: no-reperat;\n"
+"	border: none;\n"
+"	background-color: rgb(27, 29, 35);\n"
+"}\n"
+"QPushButton:hover {\n"
+"	background-color: rgb(33, 37, 43);\n"
+"}\n"
+"QPushButton:pressed {	\n"
+"	background-color: rgb(85, 170, 255);\n"
+"}")
+        self.btn_nextPageHelp.setText("Next Page")
+        
+        self.gridLayoutHelp1.addWidget(self.ComplexityHelp)
+
+        self.ConfidentialityHelp = QLabel(self.gridLayoutHelpWidgetHelp1)
         self.ConfidentialityHelp.setObjectName(u"ConfidentialityHelp")
         self.ConfidentialityHelp.setFont(font8)
         self.ConfidentialityHelp.setAlignment(Qt.AlignCenter)
@@ -1165,9 +1206,9 @@ None=There is no impact.
 Partial=There is considerable disclosure of information.	
 Complete=There is total information disclosure, providing access to any / all data on the system.""")
 
-        self.gridLayoutHelp.addWidget(self.ConfidentialityHelp, 0, 1, 1, 1)
+        self.gridLayoutHelp1.addWidget(self.ConfidentialityHelp)
 
-        self.AccessHelp = QLabel(self.gridLayoutHelpWidgetHelp)
+        self.AccessHelp = QLabel(self.gridLayoutHelpWidgetHelp1)
         self.AccessHelp.setObjectName(u"AccessHelp")
         self.AccessHelp.setFont(font8)
         self.AccessHelp.setAlignment(Qt.AlignCenter)
@@ -1180,9 +1221,9 @@ Local = must either have physical access to the vulnerable system or a local acc
 Local Network = must have access to the broadcast or collision domain of the vulnerable system 	
 Remote = an attacker can gain access through a network connection from a geographical  distance""")
 
-        self.gridLayoutHelp.addWidget(self.AccessHelp, 1, 1, 1, 1)
+        self.gridLayoutHelp1.addWidget(self.AccessHelp)
 
-        self.AuthenticationHelp = QLabel(self.gridLayoutHelpWidgetHelp)
+        self.AuthenticationHelp = QLabel(self.gridLayoutHelpWidgetHelp1)
         self.AuthenticationHelp.setObjectName(u"AuthenticationHelp")
         self.AuthenticationHelp.setFont(font8)
         self.AuthenticationHelp.setAlignment(Qt.AlignCenter)
@@ -1194,7 +1235,26 @@ Multiple=Exploitation of the vulnerability requires that the attacker authentica
 Single=The attacker must authenticate once
 Not required=There is no requirement required""")
 
-        self.gridLayoutHelp.addWidget(self.AuthenticationHelp, 2, 1, 1, 1)
+        self.gridLayoutHelp1.addWidget(self.AuthenticationHelp)
+
+        self.btn_nextPageHelp1 = QPushButton(self.page_help1, clicked = lambda: self.stackedWidget.setCurrentWidget(self.page_help))
+        self.btn_nextPageHelp1.setObjectName(u"btn_nextPageHelp1")
+        self.btn_nextPageHelp1.setMinimumSize(QSize(179, 50))
+        self.btn_nextPageHelp1.setFont(font4)
+        self.btn_nextPageHelp1.setStyleSheet(u"QPushButton {\n"
+"	background-position: left;\n"
+"	background-repeat: no-reperat;\n"
+"	border: none;\n"
+"	background-color: rgb(27, 29, 35);\n"
+"}\n"
+"QPushButton:hover {\n"
+"	background-color: rgb(33, 37, 43);\n"
+"}\n"
+"QPushButton:pressed {	\n"
+"	background-color: rgb(85, 170, 255);\n"
+"}")
+        self.btn_nextPageHelp1.setText("Back")
+        
 
         self.stackedWidget.addWidget(self.page_help)
          ############################ HELP PAGE ##################################
@@ -1261,8 +1321,8 @@ Not required=There is no requirement required""")
         self.horizontalLayout.addWidget(self.frame_main)
 
         MainWindow.setCentralWidget(self.centralwidget)
-        QWidget.setTabOrder(self.btn_minimize, self.btn_maximize_restore)
-        QWidget.setTabOrder(self.btn_maximize_restore, self.btn_close)
+        QWidget.setTabOrder(self.btn_minimize, self.btn_maximize)
+        QWidget.setTabOrder(self.btn_maximize, self.btn_close)
         QWidget.setTabOrder(self.btn_close, self.btn_toggle_menu)
 
         self.retranslateUi(MainWindow)
@@ -1283,9 +1343,9 @@ Not required=There is no requirement required""")
 #endif // QT_CONFIG(tooltip)
         self.btn_minimize.setText("")
 #if QT_CONFIG(tooltip)
-        self.btn_maximize_restore.setToolTip(QCoreApplication.translate("MainWindow", u"Maximize", None))
+        self.btn_maximize.setToolTip(QCoreApplication.translate("MainWindow", u"Maximize", None))
 #endif // QT_CONFIG(tooltip)
-        self.btn_maximize_restore.setText("")
+        self.btn_maximize.setText("")
 #if QT_CONFIG(tooltip)
         self.btn_close.setToolTip(QCoreApplication.translate("MainWindow", u"Close", None))
 #endif // QT_CONFIG(tooltip)
