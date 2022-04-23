@@ -4,7 +4,7 @@ import os
 
 class CVEHelper:
 	def __init__(self):
-		self.versions = {
+		self._versions = {
 			"10240": "1507",
 			"10586": "1511",
 			"14393": "1607",
@@ -21,7 +21,7 @@ class CVEHelper:
 		}
 
 	def getWinver(self, buildNumber):
-		return self.versions[buildNumber]
+		return self._versions[buildNumber]
 
 	def getWinverFromJson(self):
 		FH = open(os.path.expanduser('~') + "\\HadesFiles\\User.json")
@@ -29,20 +29,30 @@ class CVEHelper:
 		return data["OS"]["version"]
 
 	def getGetVulnerabilitySummary(self):
-		apiCall = "https://hadesdemowebapi20220114182325.azurewebsites.net/api/GetVulnerabilitySummary/"
-		apiCall += self.getWinverFromJson()
-		response = requests.get(apiCall)
-		return json.loads(response.content)
+		try:
+
+			apiCall = "https://hadesdemowebapi20220114182325.azurewebsites.net/api/GetVulnerabilitySummary/"
+			apiCall += self.getWinverFromJson()
+			response = requests.get(apiCall)
+			return json.loads(response.content)
+		
+		except (requests.ConnectionError, requests.Timeout) as exception:
+			print("Failed to connect")
+			return False
 	
 	def getGetCommonVulnerabilityMetrics(self):
-		VulnerabilityMetrics = {}
-		apiCall = "https://hadesdemowebapi20220114182325.azurewebsites.net/api/GetVulnerabilityMetric/"
-		apiCall += self.getWinverFromJson()
-		response = requests.get(apiCall)
-		responsedata = json.loads(response.content)
-		for data in responsedata:
-			VulnerabilityMetrics[data["name"]] = (
-				data["value"],
-				data["total"]
-			)
-		return VulnerabilityMetrics
+		try:
+			VulnerabilityMetrics = {}
+			apiCall = "https://hadesdemowebapi20220114182325.azurewebsites.net/api/GetVulnerabilityMetric/"
+			apiCall += self.getWinverFromJson()
+			response = requests.get(apiCall)
+			responsedata = json.loads(response.content)
+			for data in responsedata:
+				VulnerabilityMetrics[data["name"]] = (
+					data["value"],
+					data["total"]
+				)
+			return VulnerabilityMetrics
+		except (requests.ConnectionError, requests.Timeout) as exception:
+			print("Failed to connect")
+			return False
