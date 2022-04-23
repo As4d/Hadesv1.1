@@ -43,29 +43,45 @@ class DatabaseManager:
             "OperatingSystem": OperatingSystem,
             "TotalFileCount": TotalFileCount,
         }
-        response = requests.post(
-            "https://hadesdemowebapi20220114182325.azurewebsites.net/api/createuser",
-            json=jsonData,
-        )
+        try:
 
-        if response.text == "false":
-            pass
+            response = requests.post(
+                "https://hadesdemowebapi20220114182325.azurewebsites.net/api/createuser",
+                json=jsonData,
+            )
+
+            if response.text == "false":
+                pass
+        except (requests.ConnectionError, requests.Timeout) as exception:
+            print("Failed to connect")
+            return False
 
     def updateIntoUserFiles(self, UserId, FileType, FileCount):
         jsonData = {"UserId": UserId, "FileType": FileType, "FileCount": FileCount}
-        response = requests.put(
-            "https://hadesdemowebapi20220114182325.azurewebsites.net/api/updateuserfiles",
-            json=jsonData,
-        )
-        if response == "0":
-            self.insertIntoUserFiles()
+        try:
+
+            response = requests.put(
+                "https://hadesdemowebapi20220114182325.azurewebsites.net/api/updateuserfiles",
+                json=jsonData,
+            )
+            if response == "0":
+                self.insertIntoUserFiles()
+        
+        except (requests.ConnectionError, requests.Timeout) as exception:
+            print("Failed to connect")
+            return False
 
     def insertIntoUserFiles(self, UserId, FileType, FileCount):
         jsonData = {"UserId": UserId, "FileType": FileType, "FileCount": FileCount}
-        response = requests.post(
-            "https://hadesdemowebapi20220114182325.azurewebsites.net/api/createuserfiles",
-            json=jsonData,
-        )
+        try:
+
+            response = requests.post(
+                "https://hadesdemowebapi20220114182325.azurewebsites.net/api/createuserfiles",
+                json=jsonData,
+            )
+        except (requests.ConnectionError, requests.Timeout) as exception:
+            print("Failed to connect")
+            return False
 
     def updateUser(self):
         FH = open(os.path.expanduser('~') + "\\HadesFiles\\User.json")
