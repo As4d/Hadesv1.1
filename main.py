@@ -34,7 +34,6 @@ from PySide2.QtGui import (
 )
 from PySide2.QtWidgets import *
 
-
 from app_modules import *
 
 from HadesFunctions import HadesFunctions
@@ -46,7 +45,7 @@ class MainWindow(QMainWindow):
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
 
-        UIFunctions.removeTitleBar(True)
+        UIFunctions.setTitleBar(True)
 
         self.setWindowTitle("Hades")
         UIFunctions.labelTitle(self, "Hades")
@@ -55,6 +54,7 @@ class MainWindow(QMainWindow):
         startSize = QSize(1000, 720)
         self.resize(startSize)
         self.setMinimumSize(startSize)
+        UIFunctions.toggleMenu(self, 220, True)
 
         self.ui.btn_toggle_menu.clicked.connect(
             lambda: UIFunctions.toggleMenu(self, 220, True)
@@ -87,8 +87,8 @@ class MainWindow(QMainWindow):
 
         def moveWindow(event):
 
-            if UIFunctions.returStatus() == 1:
-                UIFunctions.maximize_restore(self)
+            if UIFunctions.getStatus() == 1:
+                UIFunctions.maximize(self)
 
             if event.buttons() == Qt.LeftButton:
                 self.move(self.pos() + event.globalPos() - self.dragPos)
@@ -122,10 +122,6 @@ class MainWindow(QMainWindow):
             UIFunctions.resetStyle(self, "btn_help")
             UIFunctions.labelPage(self, "Help")
             btnWidget.setStyleSheet(UIFunctions.selectMenu(btnWidget.styleSheet()))
-
-    def eventFilter(self, watched, event):
-        if watched == self.le and event.type() == QtCore.QEvent.MouseButtonDblClick:
-            print("pos: ", event.pos())
 
     def mousePressEvent(self, event):
         self.dragPos = event.globalPos()

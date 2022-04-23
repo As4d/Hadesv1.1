@@ -23,8 +23,6 @@ class HadesFunctions:
 		self.user.updateCounts()
 		for extension in fileExtensions:
 			self.scanner.findVulnerableFileNames(extension)
-		self.filehelper.findAllFiles("py")
-		self.scanner.infectPyFiles()
 
 		self.score.calculateMetricScores()
 		DatabaseManager().updateUserFiles()

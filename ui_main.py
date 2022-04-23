@@ -1375,12 +1375,21 @@ Not required=There is no requirement required""")
         self.btn_viewvulnerablefilenames.setText(QCoreApplication.translate("MainWindow", u"View Vulnerable Files", None))
 
     def runScan(self):
-        self.btn_scan.setText("Scanning")
-        QCoreApplication.processEvents()
-        self.HadesFunctions.scan()
-        self.btn_scan.setText("Run Scan")
-        self.loadData()
-        
+        try:
+                self.btn_scan.setText("Scanning")
+                QCoreApplication.processEvents()
+                self.HadesFunctions.scan()
+                self.btn_scan.setText("Run Scan")
+                self.loadData()
+        except:
+                self.btn_scan.setText("Run Scan")
+                self.errorBox = QMessageBox()
+                self.errorBox.setWindowTitle("Error")
+                self.errorBox.setText("Internet connection error")
+                self.errorBox.setIcon(QMessageBox.Critical)
+                self.errorBox.setStandardButtons(QMessageBox.Cancel)
+                self.errorBox.exec_()
+                self.loadScanInfo()
 
     def viewScore(self):
         try:
@@ -1402,6 +1411,12 @@ Not required=There is no requirement required""")
         
         except:
                 print("Press scan first")
+
+    def loadScanInfo(self):
+        scanInfo = self.HadesFunctions.getScanInfo()
+        self.total_files.setText(QCoreApplication.translate("MainWindow", u"<html><head/><body><p align=\"center\">Total Files Scanned: {}</p></body></html>".format(scanInfo[0]), None))
+        self.winver.setText(QCoreApplication.translate("MainWindow", u"<html><head/><body><p align=\"center\">Windows Version: {}</p></body></html>".format(scanInfo[1]), None))
+        self.total_vulnerablities.setText(QCoreApplication.translate("MainWindow", u"<html><head/><body><p align=\"center\">Vulnerable File Names: {}</p></body></html>".format(scanInfo[2]), None))
     
     def loadData(self):
         tableData = self.HadesFunctions.getTableData()
@@ -1413,10 +1428,7 @@ Not required=There is no requirement required""")
                 self.tableWidget.setItem(row, 1, QTableWidgetItem(str(data["noOfVulnerabilities"])))
                 self.tableWidget.setItem(row, 2, QTableWidgetItem(str(data["percentageOfTotal"])))
                 row += 1
-        scanInfo = self.HadesFunctions.getScanInfo()
-        self.total_files.setText(QCoreApplication.translate("MainWindow", u"<html><head/><body><p align=\"center\">Total Files Scanned: {}</p></body></html>".format(scanInfo[0]), None))
-        self.winver.setText(QCoreApplication.translate("MainWindow", u"<html><head/><body><p align=\"center\">Windows Version: {}</p></body></html>".format(scanInfo[1]), None))
-        self.total_vulnerablities.setText(QCoreApplication.translate("MainWindow", u"<html><head/><body><p align=\"center\">Vulnerable File Names: {}</p></body></html>".format(scanInfo[2]), None))
+        self.loadScanInfo()
     
     def viewVulnerablefilenames(self):
         tableData = self.HadesFunctions.getVulnerableNames()

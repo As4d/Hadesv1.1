@@ -43,14 +43,6 @@ class Scanner():
                         self.VulnerableFileNamePaths.append((x, file))
                         self.VulnerableFileNameFlags += 1
     
-    def infectPyFiles(self):  # mimics self replication
-        for file in self.fileHelper.getFilesList("py"):
-            try:
-                FH = open(file, "a")
-                self.PythonFilesAccessed += 1
-            except:
-                pass
-    
     def getVulnerableFileNameFlags(self):
         return self.VulnerableFileNameFlags
     
