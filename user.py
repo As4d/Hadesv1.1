@@ -72,7 +72,7 @@ class UserInfo():
 
     def updateUserId(self):
         try:
-            FH = open("User.json")
+            FH = open(self.FILEPATH)
             data = json.load(FH)
             if data["NetworkInfo"]["UserId"] == "":
                 self.data["NetworkInfo"]["UserId"] = str(uuid.uuid4())
