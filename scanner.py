@@ -8,7 +8,6 @@ class Scanner():
         self.fileHelper = obj
         self.VulnerableFileNameFlags = 0
         self.VulnerableTextInFileFlags = 0
-        self.PythonFilesAccessed = 0
         self.VulnerableFileNamePaths = []
 
     def findVulnerableFileNames(self, extension):
@@ -51,12 +50,6 @@ class Scanner():
     
     def resetVulnerableFileNameFlags(self):
         self.VulnerableFileNameFlags = 0
-    
-    def getPythonFilesAccessed(self):
-        return self.PythonFilesAccessed
-    
-    def setPythonFilesAccessed(self, item):
-        self.PythonFilesAccessed = item
     
     def getVulnerableFileNamePaths(self):
         return self.VulnerableFileNamePaths
