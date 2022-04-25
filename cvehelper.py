@@ -4,7 +4,7 @@ import os
 
 class CVEHelper:
 	def __init__(self):
-		self._versions = {
+		self.__versions = {
 			"10240": "1507",
 			"10586": "1511",
 			"14393": "1607",
@@ -21,7 +21,7 @@ class CVEHelper:
 		}
 
 	def getWinver(self, buildNumber):
-		return self._versions[buildNumber]
+		return self.__versions[buildNumber]
 
 	def getWinverFromJson(self):
 		FH = open(os.path.expanduser('~') + "\\HadesFiles\\User.json")
