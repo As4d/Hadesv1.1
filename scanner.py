@@ -7,7 +7,6 @@ class Scanner():
     def __init__(self, obj):
         self.fileHelper = obj
         self.VulnerableFileNameFlags = 0
-        self.VulnerableTextInFileFlags = 0
         self.VulnerableFileNamePaths = []
 
     def findVulnerableFileNames(self, extension):
